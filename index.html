@@ -1,624 +1,644 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta name="robots" content="index,follow" />
-  <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Recompound Strategy</title>
-<link rel="canonical" href="https://recompoundstrategy.com/">
-<meta name="theme-color" content="#000000" />
-<!-- Core description (matches your About + What We Do) -->
-<meta name="description" content="Private investment firm focused on acquiring cash-flowing real estate and other income-producing assets, using leverage strategically and reinvesting profits to compound long-term ownership." />
-<!-- Twitter (optional but aligned) -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Recompound Strategy" />
-<meta name="twitter:description" content="Acquiring cash-flowing assets and compounding ownership through strategic leverage and reinvestment." />
-<meta name="twitter:image" content="logo.jpg" />
-<!-- Open Graph -->
-<meta property="og:title" content="Recompound Strategy" />
-<meta property="og:description" content="Acquiring cash-flowing assets and compounding ownership through strategic leverage and reinvestment." />
-<meta property="og:image" content="logo.jpg" />
-<meta property="og:url" content="https://recompoundstrategy.com/" />
-<meta property="og:type" content="website" />
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="logo.jpg" />
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <style>
-    
-    html { scroll-behavior: smooth; }
-    :root{
-      --accent:#ffffff;
-      --accent2:#ffffff;
-      --text-dark:#ffffff;
-      --hero-bg:#000000;
-      --section-white:#ffffff;
-      --section-gray:#000000;
-      --footer-bg:#000000;
-      --footer-text:#ffffff;
-      --max-width:1100px;
-    }
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta name="robots" content="index,follow" />
+    <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Recompound Strategy</title>
+  <link rel="canonical" href="https://recompoundstrategy.com/">
+  <meta name="theme-color" content="#000000" />
+  <!-- Core description (matches your About + What We Do) -->
+  <meta name="description" content="Private investment firm focused on acquiring cash-flowing real estate and other income producing assets, using leverage strategically and reinvesting profits to compound long-term ownership." />
+  <!-- Twitter (optional but aligned) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Recompound Strategy" />
+  <meta name="twitter:description" content="Acquiring cash-flowing assets and compounding ownership through strategic leverage and reinvestment." />
+  <meta name="twitter:image" content="logo.jpg" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Recompound Strategy" />
+  <meta property="og:description" content="Acquiring cash-flowing assets and compounding ownership through strategic leverage and reinvestment." />
+  <meta property="og:image" content="logo.jpg" />
+  <meta property="og:url" content="https://recompoundstrategy.com/" />
+  <meta property="og:type" content="website" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="logo.jpg" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+      
+      html { scroll-behavior: smooth; }
+      :root{
+        --accent:#ffffff;
+        --accent2:#ffffff;
+        --text-dark:#ffffff;
+        --hero-bg:#000000;
+        --section-white:#ffffff;
+        --section-gray:#000000;
+        --footer-bg:#000000;
+        --footer-text:#ffffff;
+        --max-width:1100px;
+      }
 
-    /* ===== Global ===== */
-    html, body{
-      background:#000000 !important;
-      color:#ffffff !important;
-      font-family:'Inter',sans-serif;
-      margin:0; padding:0;
-      min-height:100vh;
-      box-sizing:border-box;
-      width:100vw; max-width:100vw;
-      overflow-x:hidden;
-    }
-    body{ display:flex; flex-direction:column; }
-/* Visible side vignette columns */
-body::before,
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 120px; /* thicker for visibility */
-  pointer-events: none;
-  z-index: 0;
-  mix-blend-mode: lighten; /* softly merge with dark bg */
-  opacity: 0.35;           /* tune this between 0.25–0.5 */
-}
-
-/* Left side shadow glow */
-body::before {
-  left: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(255,255,255,0.05) 0%,
-    rgba(255,255,255,0.02) 30%,
-    rgba(0,0,0,1) 100%
-  );
-}
-
-/* Right side glow (mirrored) */
-body::after {
-  right: 0;
-  background: linear-gradient(
-    270deg,
-    rgba(255,255,255,0.05) 0%,
-    rgba(255,255,255,0.02) 30%,
-    rgba(0,0,0,1) 100%
-  );
-}
-
-
-/* ===== Navbar ===== */
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 0.7rem 0;
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 6px 26px rgba(0,0,0,0.6);
-  transition:
-    background 0.25s ease,
-    padding 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
-}
-
-.navbar.scrolled {
-  background: rgba(0,0,0,0.97);
-  padding: 0.45rem 0;
-  box-shadow: 0 14px 40px rgba(0,0,0,0.85);
-  border-bottom-color: rgba(255,255,255,0.16);
-}
-
-.navbar::after {
-  content:"";
-  position:absolute;
-  bottom:0; left:0; right:0;
-  height:2px;
-  background:#fff;
-  opacity:.18;
-  animation:linePulse 6s ease-in-out infinite;
-}
-
-
-.nav-content {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 12px;
-  display: flex;
-  align-items: center;
-  gap: 1.8rem;
-}
-
-.nav-menu {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  gap: 1.8rem;
-}
-
-.nav-menu li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-menu a {
-  position: relative;
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.98rem;
-  text-decoration: none;
-  padding: 0 0 4px;
-  transition:
-    color 0.18s ease,
-    transform 0.18s ease;
-}
-
-.nav-menu a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  height: 2px;
-  width: 0;
-  background: #fff;
-  opacity: 0.9;
-  transition: width 0.22s ease-out;
-}
-
-.nav-menu a:hover,
-.nav-menu a:focus-visible,
-.nav-menu a.active {
-  color: #fff;
-  transform: translateY(-1px);
-}
-
-.nav-menu a:hover::after,
-.nav-menu a:focus-visible::after,
-.nav-menu a.active::after {
-  width: 100%;
-}
-
-
-/* Burger for mobile */
-.burger {
-  display: none;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 1.6rem;
-  cursor: pointer;
-}
-
-/* Mobile layout */
-@media (max-width: 768px) {
-  .burger {
-    display: block;
-  }
-
-  .nav-content {
-    padding: 0 16px;
-    justify-content: space-between;
-  }
-
-
-  /* Mobile dropdown:
-     - starts directly UNDER the fixed navbar
-     - no longer covers the logo / burger
-     - default: translucent over hero
-  */
-  .nav-menu {
+      /* ===== Global ===== */
+      html, body{
+        background:#000000 !important;
+        color:#ffffff !important;
+        font-family:'Inter',sans-serif;
+        margin:0; padding:0;
+        min-height:100vh;
+        box-sizing:border-box;
+        width:100vw; max-width:100vw;
+        overflow-x:hidden;
+      }
+      body{ display:flex; flex-direction:column; }
+  /* Visible side vignette columns */
+  body::before,
+  body::after {
+    content: "";
     position: fixed;
-    top: 48px; /* same as .navbar height from your calc */
+    top: 0;
+    bottom: 0;
+    width: 120px; /* thicker for visibility */
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: lighten; /* softly merge with dark bg */
+    opacity: 0.35;           /* tune this between 0.25–0.5 */
+  }
+
+  /* Left side shadow glow */
+  body::before {
+    left: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.05) 0%,
+      rgba(255,255,255,0.02) 30%,
+      rgba(0,0,0,1) 100%
+    );
+  }
+
+  /* Right side glow (mirrored) */
+  body::after {
+    right: 0;
+    background: linear-gradient(
+      270deg,
+      rgba(255,255,255,0.05) 0%,
+      rgba(255,255,255,0.02) 30%,
+      rgba(0,0,0,1) 100%
+    );
+  }
+
+
+  /* ===== Navbar ===== */
+  .navbar {
+    position: fixed;
+    top: 0;
     left: 0;
     right: 0;
-    display: none;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 0.9rem 1.4rem 1.4rem;
-    background: rgba(0, 0, 0, 0.28);  /* matches translucent navbar on hero */
+    z-index: 100;
+    padding: 0.7rem 0;
+    background: rgba(0,0,0,0.45);
     backdrop-filter: blur(14px);
-    box-shadow: 0 18px 40px rgba(0,0,0,0.7);
-    z-index: 999;
-    transition: background 0.22s ease;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 6px 26px rgba(0,0,0,0.6);
+    transition:
+      background 0.25s ease,
+      padding 0.25s ease,
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
   }
 
-  .nav-menu.open {
+  .navbar.scrolled {
+    background: rgba(0,0,0,0.97);
+    padding: 0.45rem 0;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.85);
+    border-bottom-color: rgba(255,255,255,0.16);
+  }
+
+  .navbar::after {
+    content:"";
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:2px;
+    background:#fff;
+    opacity:.18;
+    animation:linePulse 6s ease-in-out infinite;
+  }
+
+
+  .nav-content {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 12px;
     display: flex;
+    align-items: center;
+    gap: 1.8rem;
   }
 
-  /* When navbar is solid (scrolled) OR when menu is open,
-     keep the dropdown solid too.
-     Uses classes you ALREADY toggle in JS.
-  */
-  .navbar.scrolled .nav-menu.open,
-  .navbar.menu-open .nav-menu.open {
-    background: rgba(0, 0, 0, 0.98);
+  .nav-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+  }
+
+  .nav-menu li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
   .nav-menu a {
+    position: relative;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.98rem;
+    text-decoration: none;
+    padding: 0 0 4px;
+    transition:
+      color 0.18s ease,
+      transform 0.18s ease;
+  }
+
+  .nav-menu a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 2px;
+    width: 0;
+    background: #fff;
+    opacity: 0.9;
+    transition: width 0.22s ease-out;
+  }
+
+  .nav-menu a:hover,
+  .nav-menu a:focus-visible,
+  .nav-menu a.active {
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  .nav-menu a:hover::after,
+  .nav-menu a:focus-visible::after,
+  .nav-menu a.active::after {
     width: 100%;
-    font-size: 1.05rem;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    padding-bottom: 0.45rem;
   }
 
-  .nav-menu a:last-child {
-    border-bottom: none;
+
+  /* Burger for mobile */
+  .burger {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.6rem;
+    cursor: pointer;
   }
-}
 
-/* ===== Hero (full viewport, no darkening) ===== */
-.hero-section{
-  width:100vw; min-height:100vh;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  position:relative; z-index:1; text-align:center;
-  padding-top:5.5rem; padding-bottom:0;
-  color:#fff; background:#000; overflow:hidden;
-}
-/* the video behind the heading */
-.hero-bg-video{
-  position:absolute; inset:0; width:100%; height:100%;
-  object-fit:cover; z-index:0; /* no darkening */
-  filter:none;
-}
-/* overlay off */
-.hero-overlay{
-  display:none;
-}
-
-
-/* centered hero logo */
-.hero-logo {
-  position: relative;
-  z-index: 2;
-  width: 150px;
-  max-width: 34vw;
-  margin: 0 auto 1rem;
-  opacity: 0;
-  transform: translateY(20px);
-  /* title → logo → subtitle */
-  animation: logoFade 1.5s ease-out forwards 0.22s;
-  filter: drop-shadow(0 4px 16px rgba(0,0,0,.6));
-  overflow: hidden; /* needed for the glint sweep */
-}
-
-
-
-@keyframes logoFade {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-
-
-.hero-section .logo{ width:155px; margin:1.2rem auto .8rem; display:block; border-radius:18px; background:transparent; border:none; padding:0; }
-@keyframes fadeInUp{ from{opacity:0;transform:translateY(32px);} to{opacity:1;transform:translateY(0);} }
-.fade-in{ opacity:0; transform:translateY(40px); transition:opacity 1.2s cubic-bezier(.7,.2,.2,1), transform 1.2s cubic-bezier(.7,.2,.2,1); }
-.fade-in.visible{ opacity:1; transform:translateY(0); }
-.hero-section h1{
-  font-size:3.2rem; font-weight:800; margin-bottom:.55rem; letter-spacing:.01em;
-  color:#fff; position:relative; z-index:2;
-}
-
-.hero-section h2{
-  font-size:1.31rem; font-weight:700; margin-bottom:2.2rem; color:#fff; position:relative; z-index:2;
-}
-
-
-
-    /* ===== Buttons (BW invert) ===== */
-    .premium-btn,
-    .hero-btn,
-    .contact-btn{
-      background:#000; color:#fff; font-weight:700; border-radius:40px;
-      padding:1.12rem 2.85rem; font-size:1.18rem; border:1px solid #fff;
-      outline:none; box-shadow:none; transition:background .3s, color .3s, transform .15s, border-color .3s;
-      cursor:pointer; text-decoration:none; display:inline-block;
-    }
-    .premium-btn:hover,
-    .hero-btn:hover,
-    .contact-btn:hover{
-      background:#fff; color:#000; box-shadow:0 0 18px rgba(255,255,255,.14); transform:scale(1.05);
+  /* Mobile layout */
+  @media (max-width: 768px) {
+    .burger {
+      display: block;
     }
 
-    /* ===== Sections ===== */
-    .site-section{ width:100vw; background:#000 !important; margin:0; padding:0; border-radius:0; box-shadow:none; display:block; }
-    .section-inner{
-  max-width:1200px;      /* match navbar container width */
-  margin:0 auto;
-  padding:3.2rem 16px 1.5rem; /* match navbar side padding */
-}
-
-    .site-section h3{
-      font-size:2.09rem; margin-bottom:1.2rem; color:#fff; font-weight:900; letter-spacing:0;
-      position:relative;
-    }
-    .site-section h3::after{
-      content:""; display:block; height:3px; width:88px; margin-top:10px; border-radius:3px; background:#fff;
-    }
-    /* Hide the h3 underline on the CTA section */
-#contact .section-inner h3::after{
-  display:none;
-}
-
-    .site-section p, .site-section ul li, .about-bottom-inner p{ color:#fff !important; }
-    .site-section ul{ margin-left:1.3rem; }
-
-    /* ===== Chart sections (still black) ===== */
-    .chart-section{ width:100vw; background:#000 !important; margin:0; display:block; min-height:440px; position:relative; }
-    .chart-section-inner{ max-width:100vw !important; padding-top:2.5rem !important; padding-bottom:0 !important; position:relative; overflow:visible !important; min-height:600px !important; }
-    .chart-section canvas{ max-width:100%; width:100%; margin:1.3rem auto 0; display:block; background:transparent; }
-
-    /* Form controls in monochrome */
-    #cityYield, #dcaStartYear, #dcaLumpSum,
-    .chart-select, .chart-input{
-      font-size:1.08rem; font-weight:600;
-      border-radius:8px; padding:6px 16px;
-      background:#000; border:1.5px solid #fff; color:#fff;
-    }
-    .tab-btn{
-      font-weight:700; font-size:1.08rem; color:#fff; background:none;
-      border:1px solid #333; border-radius:8px; padding:.54rem 1.31rem;
-      transition:background .2s, color .18s, transform .15s, box-shadow .2s, border-color .2s;
-      cursor:pointer; outline:none;
-    }
-    .tab-btn.active, .tab-btn:hover{
-      background:#fff; color:#000; box-shadow:0 0 10px rgba(255,255,255,.12); transform:scale(1.03); border-color:#fff;
+    .nav-content {
+      padding: 0 16px;
+      justify-content: space-between;
     }
 
 
-footer{
-  position:relative;
-  width:100vw;
-  background:#000;
-  text-align:center; min-height:60px; padding:12px 0;
-  font-size:1.07rem; color:var(--footer-text);
-  display:flex; align-items:center; justify-content:center; margin-top:auto;
-  border-top:1px solid #111;
-  overflow:hidden;
-}
-footer::before{
-  content:"";
-  position:absolute; top:0; left:0; right:0; height:2px;
-  background:white; opacity:.18;
-  animation:linePulse 6s ease-in-out infinite;
-}
-@keyframes linePulse{
-  0%,100%{opacity:.15;}
-  50%{opacity:.6;}
-}
-
-    .footer-row{
-      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;
-      margin:0 auto; max-width:var(--max-width); width:100%;
-    }
-    .footer-link{ color:#fff; font-size:1.04rem; text-decoration:underline; }
-    .footer-link:hover{ color:#fff; }
-    .footer-socials{ display:flex; gap:1.1rem; align-items:center; }
-    .footer-socials a{ color:#fff; font-weight:700; font-size:1.13rem; text-decoration:none; display:flex; align-items:center; }
-    .footer-socials a:hover{ color:#000; background:#fff; padding:.1rem .35rem; border-radius:.35rem; }
-    .footer-socials svg{ margin-right:6px; vertical-align:middle; }
-
-    /* Mobile footer tweaks */
-    @media (max-width:700px){
-      footer{ min-height:52px !important; padding:11px 0 9px !important; font-size:.96rem; }
-      .footer-row{ flex-direction:column !important; gap:.3rem !important; width:100vw !important; justify-content:center !important; align-items:center !important; margin:0 !important; }
-      .footer-link,.footer-socials{ font-size:.89rem !important; margin:0 !important; flex-wrap:wrap; }
+    /* Mobile dropdown:
+      - starts directly UNDER the fixed navbar
+      - no longer covers the logo / burger
+      - default: translucent over hero
+    */
+    .nav-menu {
+      position: fixed;
+      top: 48px; /* same as .navbar height from your calc */
+      left: 0;
+      right: 0;
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.9rem 1.4rem 1.4rem;
+      background: rgba(0, 0, 0, 0.28);  /* matches translucent navbar on hero */
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+      z-index: 999;
+      transition: background 0.22s ease;
     }
 
-    /* Hide scrollbars (as you had) */
-    body *::-webkit-scrollbar{ display:none !important; width:0 !important; height:0 !important; background:transparent !important; }
-
-    /* Small spacing fixes */
-    @media (max-width:900px){
-      .section-inner, .chart-section-inner, .about-bottom-inner{ padding:1rem .5rem 1.2rem .5rem; }
+    .nav-menu.open {
+      display: flex;
     }
-    @media (max-width:600px){
-      .section-inner, .about-bottom-inner, .chart-section-inner{ padding:1.2rem .7rem 1.1rem .7rem !important; }
-      .hero-section{ padding-left:.7rem !important; padding-right:.7rem !important; }
-      .navbar ul{ padding-left:.2rem; padding-right:.2rem; }
-      .site-section h3{ font-size:1.3rem; }
-      .contact-btn{ padding:.75rem 1.2rem; font-size:1rem; }
-      .footer-row{ flex-direction:column; gap:.7rem; }
+
+    /* When navbar is solid (scrolled) OR when menu is open,
+      keep the dropdown solid too.
+      Uses classes you ALREADY toggle in JS.
+    */
+    .navbar.scrolled .nav-menu.open,
+    .navbar.menu-open .nav-menu.open {
+      background: rgba(0, 0, 0, 0.98);
     }
-    /* ===== Scroll Reveal Animation ===== */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-/* Accessible focus ring across the site */
-:focus-visible {
-  outline: 2px solid #ffffff;
-  outline-offset: 2px;
-}
 
-/* Make nav links show focus clearly */
-.nav-menu a:focus-visible {
-  border-bottom-color:#fff !important;
-  transform: scale(1.07) translateY(-2px);
-}
-/* Privacy Policy modal */
-.modal { position: fixed; inset: 0; display: none; z-index: 99999; }
-.modal:target { display: block; }
-.modal__backdrop { position:absolute; inset:0; background:rgba(0,0,0,.65); }
-.modal__panel {
-  position: relative; margin: 8vh auto 0; max-width: 720px;
-  background:#000; color:#fff; border:1px solid #333; border-radius:16px;
-  padding: 1.5rem 1.3rem;
-  box-shadow: 0 20px 60px rgba(0,0,0,.5);
-}
-.modal__close {
-  position:absolute; top:.4rem; right:.6rem; background:#111; color:#fff;
-  border:1px solid #333; border-radius:8px; font-size:1.5rem; line-height:1;
-  padding:.1rem .55rem; cursor:pointer;
-}
-.modal__close:hover { background:#fff; color:#000; }
+    .nav-menu a {
+      width: 100%;
+      font-size: 1.05rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 0.45rem;
+    }
 
-  /***** Section Heading Reveal Underline *****/
-.site-section h3{
-  position: relative;
-  display: inline-block;
-  padding-bottom: .35rem;
-}
-
-.site-section.reveal h3::after{
-  content:"";
-  position:absolute;
-  left:0; bottom:-2px;
-  height:2px; width:0;
-  background:#fff;
-  opacity:.9;
-  transition: width .35s ease-out;
-}
-
-.site-section.reveal.visible h3::after{
-  width:100%;
-}
-
-@media (prefers-reduced-motion: reduce){
-  .site-section.reveal h3::after{ transition:none; width:100%; }
-}
-/***** Motion Preferences & Smoothing *****/
-html{ scroll-behavior: smooth; }
-
-@media (prefers-reduced-motion: reduce){
-  *,:before,:after{
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
+    .nav-menu a:last-child {
+      border-bottom: none;
+    }
   }
-}
-/***** Hero Micro-Parallax *****/
-.hero-title, .hero-subtitle {
-  will-change: transform;
-  transition: transform .25s ease-out;
-}
-@media (prefers-reduced-motion: reduce){
-  .hero-title, .hero-subtitle { transition: none !important; transform: none !important; }
-}
-#scroll-progress{
-  position: fixed;
-  top: 0; left: 0;
-  height: 2px;
-  width: 100%;
-  transform: scaleX(0);
-  transform-origin: left center;
-  background: #fff;
-  opacity: .18;
-  z-index: 2000;
-  pointer-events: none;
-}
 
-</style>
+  /* ===== Hero (full viewport, no darkening) ===== */
+  .hero-section{
+    width:100vw; min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    position:relative; z-index:1; text-align:center;
+    padding-top:5.5rem; padding-bottom:0;
+    color:#fff; background:#000; overflow:hidden;
+  }
+  /* the video behind the heading */
+  .hero-bg-video{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; z-index:0; /* no darkening */
+    filter:none;
+  }
+  /* overlay off */
+  .hero-overlay{
+    display:none;
+  }
+  
+  /* centered hero logo */
+  .hero-logo {
+    position: relative;
+    z-index: 2;
+    width: 150px;
+    max-width: 34vw;
+    margin: 0 auto 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    /* title → logo → subtitle */
+    animation: logoFade 1.5s ease-out forwards 0.22s;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,.6));
+    overflow: hidden; /* needed for the glint sweep */
+  }
 
 
 
-  <!-- NEW: Organization schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "InvestmentCompany",
-  "name": "Recompound Strategy",
-  "url": "https://recompoundstrategy.com/",
-  "logo": "https://recompoundstrategy.com/logo.jpg",
-  "sameAs": [
-    "https://instagram.com/recompound_strategy",
-    "mailto:info@recompoundstrategy.com"
-  ],
-  "description": "Private investment firm focused on acquiring income-producing assets and reinvesting to expand ownership and long-term cash flow."
-}
-</script>
-<style>
-    .testimonial-section {
-  text-align: center;
-  margin: 4rem 0;
-  padding: 2rem 1rem;
-}
+  @keyframes logoFade {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
 
-.testimonial-quote {
-  display: block;
-  font-size: 1.2rem;
-  font-style: italic;
-  color: #ddd;
-}
 
-.testimonial-author {
-  display: block;
-  margin-top: 0.6rem;
-  font-size: 1rem;
-  color: #999;
-}
 
-/* Actual visible entrance */
-.testimonial-section.reveal {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.45s ease-out, transform 0.45s ease-out;
-}
+  .hero-section .logo{ width:155px; margin:1.2rem auto .8rem; display:block; border-radius:18px; background:transparent; border:none; padding:0; }
+  @keyframes fadeInUp{ from{opacity:0;transform:translateY(32px);} to{opacity:1;transform:translateY(0);} }
+  .fade-in{ opacity:0; transform:translateY(40px); transition:opacity 1.2s cubic-bezier(.7,.2,.2,1), transform 1.2s cubic-bezier(.7,.2,.2,1); }
+  .fade-in.visible{ opacity:1; transform:translateY(0); }
+  .hero-section h1{
+    font-size:3.2rem; font-weight:800; margin-bottom:.55rem; letter-spacing:.01em;
+    color:#fff; position:relative; z-index:2;
+  }
 
-.testimonial-section.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+  .hero-section h2{
+    font-size:1.31rem; font-weight:700; margin-bottom:2.2rem; color:#fff; position:relative; z-index:2;
+  }
+
+
+
+      /* ===== Buttons (BW invert) ===== */
+      .premium-btn,
+      .hero-btn,
+      .contact-btn{
+        background:#000; color:#fff; font-weight:700; border-radius:40px;
+        padding:1.12rem 2.85rem; font-size:1.18rem; border:1px solid #fff;
+        outline:none; box-shadow:none; transition:background .3s, color .3s, transform .15s, border-color .3s;
+        cursor:pointer; text-decoration:none; display:inline-block;
+      }
+      .premium-btn:hover,
+      .hero-btn:hover,
+      .contact-btn:hover{
+        background:#fff; color:#000; box-shadow:0 0 18px rgba(255,255,255,.14); transform:scale(1.05);
+      }
+
+      /* ===== Sections ===== */
+      .site-section{ width:100vw; background:#000 !important; margin:0; padding:0; border-radius:0; box-shadow:none; display:block; }
+      .section-inner{
+    max-width:1200px;      /* match navbar container width */
+    margin:0 auto;
+    padding:3.2rem 16px 1.5rem; /* match navbar side padding */
+  }
+
+      .site-section h3{
+        font-size:2.09rem; margin-bottom:1.2rem; color:#fff; font-weight:900; letter-spacing:0;
+        position:relative;
+      }
+      .site-section h3::after{
+        content:""; display:block; height:3px; width:88px; margin-top:10px; border-radius:3px; background:#fff;
+      }
+      /* Hide the h3 underline on the CTA section */
+  #contact .section-inner h3::after{
+    display:none;
+  }
+
+      .site-section p, .site-section ul li, .about-bottom-inner p{ color:#fff !important; }
+      .site-section ul{ margin-left:1.3rem; }
+
+      /* ===== Chart sections (still black) ===== */
+      .chart-section{ width:100vw; background:#000 !important; margin:0; display:block; min-height:440px; position:relative; }
+      .chart-section-inner{ max-width:100vw !important; padding-top:2.5rem !important; padding-bottom:0 !important; position:relative; overflow:visible !important; min-height:600px !important; }
+      .chart-section canvas{ max-width:100%; width:100%; margin:1.3rem auto 0; display:block; background:transparent; }
+
+      /* Form controls in monochrome */
+      #cityYield, #dcaStartYear, #dcaLumpSum,
+      .chart-select, .chart-input{
+        font-size:1.08rem; font-weight:600;
+        border-radius:8px; padding:6px 16px;
+        background:#000; border:1.5px solid #fff; color:#fff;
+      }
+      .tab-btn{
+        font-weight:700; font-size:1.08rem; color:#fff; background:none;
+        border:1px solid #333; border-radius:8px; padding:.54rem 1.31rem;
+        transition:background .2s, color .18s, transform .15s, box-shadow .2s, border-color .2s;
+        cursor:pointer; outline:none;
+      }
+      .tab-btn.active, .tab-btn:hover{
+        background:#fff; color:#000; box-shadow:0 0 10px rgba(255,255,255,.12); transform:scale(1.03); border-color:#fff;
+      }
+
+
+  footer{
+    position:relative;
+    width:100vw;
+    background:#000;
+    text-align:center; min-height:60px; padding:12px 0;
+    font-size:1.07rem; color:var(--footer-text);
+    display:flex; align-items:center; justify-content:center; margin-top:auto;
+    border-top:1px solid #111;
+    overflow:hidden;
+  }
+  footer::before{
+    content:"";
+    position:absolute; top:0; left:0; right:0; height:2px;
+    background:white; opacity:.18;
+    animation:linePulse 6s ease-in-out infinite;
+  }
+  @keyframes linePulse{
+    0%,100%{opacity:.15;}
+    50%{opacity:.6;}
+  }
+
+      .footer-row{
+        display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;
+        margin:0 auto; max-width:var(--max-width); width:100%;
+      }
+      .footer-link{ color:#fff; font-size:1.04rem; text-decoration:underline; }
+      .footer-link:hover{ color:#fff; }
+      .footer-socials{ display:flex; gap:1.1rem; align-items:center; }
+      .footer-socials a{ color:#fff; font-weight:700; font-size:1.13rem; text-decoration:none; display:flex; align-items:center; }
+      .footer-socials a:hover{ color:#000; background:#fff; padding:.1rem .35rem; border-radius:.35rem; }
+      .footer-socials svg{ margin-right:6px; vertical-align:middle; }
+
+      /* Mobile footer tweaks */
+      @media (max-width:700px){
+        footer{ min-height:52px !important; padding:11px 0 9px !important; font-size:.96rem; }
+        .footer-row{ flex-direction:column !important; gap:.3rem !important; width:100vw !important; justify-content:center !important; align-items:center !important; margin:0 !important; }
+        .footer-link,.footer-socials{ font-size:.89rem !important; margin:0 !important; flex-wrap:wrap; }
+      }
+
+      /* Hide scrollbars (as you had) */
+      body *::-webkit-scrollbar{ display:none !important; width:0 !important; height:0 !important; background:transparent !important; }
+
+      /* Small spacing fixes */
+      @media (max-width:900px){
+        .section-inner, .chart-section-inner, .about-bottom-inner{ padding:1rem .5rem 1.2rem .5rem; }
+      }
+      @media (max-width:600px){
+        .section-inner, .about-bottom-inner, .chart-section-inner{ padding:1.2rem .7rem 1.1rem .7rem !important; }
+        .hero-section{ padding-left:.7rem !important; padding-right:.7rem !important; }
+        .navbar ul{ padding-left:.2rem; padding-right:.2rem; }
+        .site-section h3{ font-size:1.3rem; }
+        .contact-btn{ padding:.75rem 1.2rem; font-size:1rem; }
+        .footer-row{ flex-direction:column; gap:.7rem; }
+      }
+      /* ===== Scroll Reveal Animation ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Accessible focus ring across the site */
+  :focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+  }
+
+  /* Make nav links show focus clearly */
+  .nav-menu a:focus-visible {
+    border-bottom-color:#fff !important;
+    transform: scale(1.07) translateY(-2px);
+  }
+  /* Privacy Policy modal */
+  .modal { position: fixed; inset: 0; display: none; z-index: 99999; }
+  .modal:target { display: block; }
+  .modal__backdrop { position:absolute; inset:0; background:rgba(0,0,0,.65); }
+  .modal__panel {
+    position: relative; margin: 8vh auto 0; max-width: 720px;
+    background:#000; color:#fff; border:1px solid #333; border-radius:16px;
+    padding: 1.5rem 1.3rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  }
+  .modal__close {
+    position:absolute; top:.4rem; right:.6rem; background:#111; color:#fff;
+    border:1px solid #333; border-radius:8px; font-size:1.5rem; line-height:1;
+    padding:.1rem .55rem; cursor:pointer;
+  }
+  .modal__close:hover { background:#fff; color:#000; }
+
+    /***** Section Heading Reveal Underline *****/
+  .site-section h3{
+    position: relative;
+    display: inline-block;
+    padding-bottom: .35rem;
+  }
+
+  .site-section.reveal h3::after{
+    content:"";
+    position:absolute;
+    left:0; bottom:-2px;
+    height:2px; width:0;
+    background:#fff;
+    opacity:.9;
+    transition: width .35s ease-out;
+  }
+
+  .site-section.reveal.visible h3::after{
+    width:100%;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .site-section.reveal h3::after{ transition:none; width:100%; }
+  }
+  /***** Motion Preferences & Smoothing *****/
+  html{ scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce){
+    *,:before,:after{
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  /***** Hero Micro-Parallax *****/
+  .hero-title, .hero-subtitle {
+    will-change: transform;
+    transition: transform .25s ease-out;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-title, .hero-subtitle { transition: none !important; transform: none !important; }
+  }
+  #scroll-progress{
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: #fff;
+    opacity: .18;
+    z-index: 2000;
+    pointer-events: none;
+  }
 
   </style>
+
+
+
+    <!-- NEW: Organization schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "InvestmentCompany",
+    "name": "Recompound Strategy",
+    "url": "https://recompoundstrategy.com/",
+    "logo": "https://recompoundstrategy.com/logo.jpg",
+    "sameAs": [
+      "https://instagram.com/recompound_strategy",
+      "mailto:info@recompoundstrategy.com"
+    ],
+    "description": "Private investment firm focused on acquiring income-producing assets and reinvesting to expand ownership and long-term cash flow."
+  }
+  </script>
+  <style>
+      .testimonial-section {
+    text-align: center;
+    margin: 4rem 0;
+    padding: 2rem 1rem;
+  }
+
+  .testimonial-quote {
+    display: block;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #ddd;
+  }
+
+  .testimonial-author {
+    display: block;
+    margin-top: 0.6rem;
+    font-size: 1rem;
+    color: #999;
+  }
+
+  /* Actual visible entrance */
+  .testimonial-section.reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+  }
+
+  .testimonial-section.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+    </style>
+ <style>
+  /* === Institutional Grid (ADD) === */
+  .hero-section{ position:relative; }
+
+  /* === Principles Rail (ADD) === */
+  #principles-rail .rail{
+    overflow:hidden; border-top:1px solid #111; border-bottom:1px solid #111;
+    background:#0a0a0a; padding:8px 0;
+  }
+  #principles-rail .track{
+    display:flex; gap:40px; white-space:nowrap; will-change:transform;
+    animation:rail-move 22s linear infinite;
+  }
+  #principles-rail .track span{
+    color:#ccc; letter-spacing:.08em; text-transform:uppercase; font-size:.78rem;
+  }
+  @keyframes rail-move {
+    from { transform:translateX(0); }
+    to   { transform:translateX(-50%); }
+  }
+</style>
 </head>
-<body>
-  <div id="scroll-progress"></div>
 
-
-<!-- Navbar -->
-<nav class="navbar">
-  <div class="nav-content" style="max-width:1200px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;">
-    
-    <!-- Left: logo + name -->
-    <a href="#home" class="nav-left" style="display:flex;align-items:center;gap:0.55rem;text-decoration:none;color:inherit;">
-  <img src="logo.jpg" alt="Recompound Strategy" class="nav-logo"
-       style="height:26px;width:26px;border-radius:7px;display:block;opacity:0;transition:opacity .3s ease;">
-  <span class="nav-wordmark"
-        style="font-weight:700;font-size:1.02rem;letter-spacing:0.02em;white-space:nowrap;opacity:0;transform:translateY(-3px);transition:opacity .3s ease,transform .3s ease;">
-    Recompound Strategy
-  </span>
-</a>
-
-
-
-    <!-- Mobile menu button -->
-    <button class="burger" id="burgerBtn" aria-label="Menu">&#9776;</button>
-
-    <!-- Right: nav links -->
-    <ul class="nav-menu" id="mainNavMenu">
-  <li><a href="#home" class="active" aria-current="page">Home</a></li>
-  <li><a href="#contact">Contact</a></li>
-  <li><a href="#model" id="nav-model">Acquisition Model</a></li>
-</ul>
-
-
-  </div>
-</nav>
+  <body>
+    <div id="scroll-progress"></div>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-content" style="max-width:1200px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;">
+      
+      <!-- Left: logo + name -->
+      <a href="#home" class="nav-left" style="display:flex;align-items:center;gap:0.55rem;text-decoration:none;color:inherit;">
+    <img src="logo.jpg" alt="Recompound Strategy" class="nav-logo"
+        style="height:26px;width:26px;border-radius:7px;display:block;opacity:0;transition:opacity .3s ease;">
+    <span class="nav-wordmark"
+          style="font-weight:700;font-size:1.02rem;letter-spacing:0.02em;white-space:nowrap;opacity:0;transform:translateY(-3px);transition:opacity .3s ease,transform .3s ease;">
+      Recompound Strategy
+    </span>
+  </a>
 
 
 
-<!-- Hero -->
+      <!-- Mobile menu button -->
+      <button class="burger" id="burgerBtn" aria-label="Menu">&#9776;</button>
+
+      <!-- Right: nav links -->
+      <ul class="nav-menu" id="mainNavMenu">
+    <li><a href="#home" class="active" aria-current="page">Home</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#model" id="nav-model">Acquisition Model</a></li>
+  </ul>
+
+
+    </div>
+  </nav>
+  
+
+
+
+  <!-- Hero -->
 <section class="hero-section" id="home">
   <video class="hero-bg-video"
          src="https://cdn.shopify.com/videos/c/o/v/bdda76898684442a9abe8bbfd11d50ef.mp4"
@@ -634,1105 +654,1308 @@ html{ scroll-behavior: smooth; }
   </div>
 </section>
 
+
 <section class="stats-bar reveal">
   <div class="stats-inner">
-    <div><h4>€1M+</h4><p>Assets Under Management</p></div>
-    <div><h4>3</h4><p>Active Strategies</p></div>
-    <div><h4>Long Term</h4><p>Average Hold</p></div>
+    <div class="stat"
+     data-target="1200000"
+     data-prefix="€"
+     data-suffix="+"
+     data-format="abbr"
+     data-fixed="1"
+     data-duration="2800">
+  <h4><span class="stat-num">0</span></h4>
+  <p>Assets Under Management</p>
+</div>
+
+    <div class="stat" data-target="3">
+      <h4><span class="stat-num">0</span></h4>
+      <p>Active Strategies</p>
+    </div>
+
+    <!-- keep text if you prefer; or make it numeric by setting target -->
+    <div class="stat">
+      <h4>Long Term</h4>
+      <p>Average Hold</p>
+    </div>
   </div>
 </section>
 
+    <!-- ABOUT -->
+    <section class="site-section reveal" id="about">
+      <div class="section-inner">
+        <h3>About</h3>
+        <p>Recompound Strategy is a private investment firm focused on acquiring and holding income producing real estate and other high quality assets. All profits are reinvested to expand ownership and scale long term cash flow through continuous acquisitions and disciplined allocation.</p>
+      </div>
+    </section>
 
-  <!-- ABOUT -->
-  <section class="site-section reveal" id="about">
-    <div class="section-inner">
-      <h3>About</h3>
-      <p>Recompound Strategy is a private investment firm focused on acquiring income producing assets, mainly Real Estate. All profits are reinvested to expand ownership and scale long term cash flow through continuous acquisitions and strategic allocation into other high quality assets.</p>
+    <!-- WHAT WE DO -->
+    <section class="site-section reveal" id="what-we-do">
+      <div class="section-inner">
+        <h3>What We Do</h3>
+        <p>
+          We acquire and hold cash flowing Real Estate that funds future acquisitions. We use leverage strategically to build equity while controlling risk and let assets pay themselves down through cash flow. Profits are reinvested into new deals to expand and diversify ownership over time.
+        </p>
+      </div>
+    </section>
+
+  <section class="site-section reveal" id="blueprint">
+    <div class="section-inner blueprint-strip">
+      <h3>Acquisition Blueprint</h3>
+      <div class="blueprint-steps">
+        <div class="bp-step">
+          <span class="bp-label">Source</span>
+          <span class="bp-text">Target cash flowing assets that fit strict criteria.</span>
+        </div>
+        <div class="bp-step">
+          <span class="bp-label">Acquire & Leverage</span>
+          <span class="bp-text">Acquire with disciplined leverage, backed by cash flow.</span>
+        </div>
+        <div class="bp-step">
+          <span class="bp-label">Operate & Reinvest</span>
+          <span class="bp-text">Improve operations and recycle free cash into more assets.</span>
+        </div>
+        <div class="bp-step">
+          <span class="bp-label">Compound</span>
+          <span class="bp-text">Let scale, yield, and time do the heavy lifting.</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- WHAT WE DO -->
-  <section class="site-section reveal" id="what-we-do">
+
+  <section class="testimonial-section site-section reveal">
     <div class="section-inner">
-      <h3>What We Do</h3>
-      <ul>
-        <li><strong>Real Estate:</strong> Acquire and hold cash flowing properties that fund future acquisitions.</li>
-        <li><strong>Leverage:</strong> Use debt strategically to scale faster, build equity, and repay it through cash flow.</li>  
-        <li><strong>Reinvestment:</strong> Reinvest profits to expand ownership and accelerate compounding.</li>
-        <li><strong>Diversification:</strong> Allocate into other income producing assets such as stocks, bonds, and ETFs to strengthen the portfolio.</li>
+      <blockquote>
+        <span class="testimonial-quote">
+          “The first rule of compounding: Never interrupt it unnecessarily.”
+        </span>
+        <span class="testimonial-author">— Charlie Munger</span>
+      </blockquote>
+    </div>
+  </section>
+
+
+    <!-- PRINCIPLES -->
+    <section class="site-section reveal" id="principles">
+      <div class="section-inner">
+        <h3>Principles</h3>
+        <ul>
+          <li><strong>Cash Flow First:</strong> If it doesn’t generate cash flow, it’s not a priority.</li>
+          <li><strong>Reinvest Relentlessly:</strong> Profits get redeployed to scale.</li>
+          <li><strong>Simple Structures:</strong> Keep things clean, legal, and easy to control.</li>
+          <li><strong>Long Term Horizon:</strong> Think decades ahead, not months.</li>
+          <li><strong>Quiet Moves:</strong> Wealth grows in silence, not noise.</li>
+          <li><strong>Control Over Everything:</strong> Own it, structure it, protect it.</li>
+          <li><strong>No Dead Capital:</strong> Idle money is wasted opportunity.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="site-section reveal" id="structure">
+    <div class="section-inner">
+      <h3>Structure & Strategy</h3>
+      <ul class="strategy-list">
+        <li><strong>HoldCo Structure:</strong> All assets owned through one controlled entity for efficiency and scalability.</li>
+        <li><strong>Cash Flow Engine:</strong> Income producing properties fuel reinvestment cycles without outside dilution.</li>
+        <li><strong>Capital Discipline:</strong> Debt only when self liquidating through asset cash flow.</li>
+        <li><strong>Recompound Strategy:</strong> Profits never exit they expand ownership and equity control.</li>
       </ul>
     </div>
   </section>
 
-<section class="site-section reveal" id="blueprint">
-  <div class="section-inner blueprint-strip">
-    <h3>Acquisition Blueprint</h3>
-    <div class="blueprint-steps">
-      <div class="bp-step">
-        <span class="bp-label">Source</span>
-        <span class="bp-text">Target cash-flowing assets that fit strict criteria.</span>
+<div class="section-divider"></div>
+
+
+    <!-- CTA -->
+    <section class="site-section reveal" id="contact">
+      <div class="section-inner" style="text-align:center;">
+        <h3>Partnerships &amp; Opportunities</h3>
+        <p>For investment, development, or strategic collaboration, contact us.</p>
+        <a href="mailto:info@recompoundstrategy.com" class="contact-btn">Contact</a>
+        <p style="margin-top:1rem;color:#ffffff;"><em>Strategy isn’t loud.</em></p>
       </div>
-      <div class="bp-step">
-        <span class="bp-label">Acquire & Leverage</span>
-        <span class="bp-text">Acquire with disciplined leverage, backed by cash flow.</span>
-      </div>
-      <div class="bp-step">
-        <span class="bp-label">Operate & Reinvest</span>
-        <span class="bp-text">Improve operations and recycle free cash into more assets.</span>
-      </div>
-      <div class="bp-step">
-        <span class="bp-label">Compound</span>
-        <span class="bp-text">Let scale, yield, and time do the heavy lifting.</span>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
 
-<section class="testimonial-section site-section reveal">
-  <div class="section-inner">
-    <blockquote>
-      <span class="testimonial-quote">
-        “The first rule of compounding: Never interrupt it unnecessarily.”
-      </span>
-      <span class="testimonial-author">— Charlie Munger</span>
-    </blockquote>
-  </div>
-</section>
-
-
-  <!-- PRINCIPLES -->
-  <section class="site-section reveal" id="principles">
-    <div class="section-inner">
-      <h3>Principles</h3>
-      <ul>
-        <li><strong>Cash Flow First:</strong> If it doesn’t generate cash flow, it’s not a priority.</li>
-        <li><strong>Reinvest Relentlessly:</strong> Every euro earned gets redeployed to scale.</li>
-        <li><strong>Simple Structures:</strong> Keep things clean, legal, and easy to control.</li>
-        <li><strong>Long-Term Horizon:</strong> Think decades ahead, not months.</li>
-        <li><strong>Quiet Moves:</strong> Wealth grows in silence, not noise.</li>
-        <li><strong>Control Over Everything:</strong> Own it, structure it, protect it.</li>
-        <li><strong>No Dead Capital:</strong> Idle money is wasted opportunity.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="site-section reveal" id="structure">
-  <div class="section-inner">
-    <h3>Structure & Strategy</h3>
-    <ul class="strategy-list">
-      <li><strong>HoldCo Structure:</strong> All assets owned through one controlled entity for efficiency and scalability.</li>
-      <li><strong>Cash Flow Engine:</strong> Income-producing properties fuel reinvestment cycles without outside dilution.</li>
-      <li><strong>Capital Discipline:</strong> Debt only when self-liquidating through asset cash flow.</li>
-      <li><strong>Recompound Strategy:</strong> Profits never exit — they expand ownership and equity control.</li>
-    </ul>
-  </div>
-</section>
-
-
-  <!-- CTA -->
-  <section class="site-section reveal" id="contact">
-    <div class="section-inner" style="text-align:center;">
-      <h3>Partnerships &amp; Opportunities</h3>
-      <p>For investment, development, or strategic collaboration, contact us.</p>
-      <a href="mailto:info@recompoundstrategy.com" class="contact-btn">Contact</a>
-      <p style="margin-top:1rem;color:#ffffff;"><em>Strategy isn’t loud.</em></p>
-    </div>
-  </section>
-
-
-  <!-- Acquisition Model — exact styling/markup from model1.html -->
-<section id="model" style="display:none;">
-  <style>
-    :root{
-      --bg:#000000; --panel:#0e0e10; --muted:#1a1a1d; --ink:#ffffff; --ink-dim:#bdbdbd;
-      --accent:#ffffff; --ring:rgba(255,255,255,.15); --card:#101114; --tile:#0d0e11;
-      --tile-border:#1b1c21; --success:#23c55e; --warn:#f59e0b; --danger:#ef4444;
-    }
-    *{box-sizing:border-box}
-    .model-scope, .model-scope *{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-    .model-scope{background:var(--bg); color:var(--ink)}
-    /* Top nav (exact from model1.html) + white pulse line like footer */
-.nav{
-  position:fixed;
-  top:0; left:0; right:0; width:100%;
-  z-index:1000;
-  border-bottom:1px solid rgba(255,255,255,0.06);
-  background:rgba(0,0,0,0.45);
-  backdrop-filter:blur(14px);
-  box-shadow:0 6px 26px rgba(0,0,0,0.6);
-  transition:background 0.25s ease,padding 0.25s ease,box-shadow 0.25s ease,border-color 0.25s ease;
-}
-
-.nav::after{
-  content:"";
-  position:absolute; bottom:0; left:0; right:0; height:2px;
-  background:#fff; opacity:.18;
-  animation:linePulse 6s ease-in-out infinite;
-}
-
-
-.nav-inner{
-  max-width:1200px;
-  margin:0 auto;
-  padding:10px 16px;          /* match main navbar’s spacing */
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1.8rem;
-}
-
-.mark{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px}
-.mark .eagle{filter:drop-shadow(0 0 12px rgba(255,255,255,.12))}
-.spacer{flex:1}
-.crumbs a{color:var(--ink-dim); text-decoration:none}
-.crumbs a:hover{color:var(--ink)}
-.crumbs{font-size:.95rem}
-.crumbs .sep{opacity:.35; margin:0 6px}
-
-    .model-scope .wrap{
-  max-width:1200px;
-  margin:96px auto 32px;   /* 96px top to clear the fixed crumbs bar */
-  padding:0 20px;
-}
-
-    .model-scope h1{font-size:40px; line-height:1.1; margin:12px 0 0}
-    .model-scope .sub{color:var(--ink-dim); margin-top:10px; max-width:880px}
-    .model-scope .grid{margin-top:28px; display:grid; gap:20px; grid-template-columns:380px 1fr}
-    @media (max-width:1024px){ .model-scope .grid{grid-template-columns:1fr} }
-    .model-scope .panel{background:var(--panel); border:1px solid var(--tile-border); border-radius:14px; padding:18px}
-    .model-scope .panel h3{margin:0 0 14px; font-size:.95rem; letter-spacing:.2px; color:var(--ink-dim); font-weight:600; text-transform:uppercase}
-    .model-scope .inputs{display:grid; gap:12px}
-    .model-scope .row{display:grid; grid-template-columns:1fr 140px; gap:10px; align-items:center}
-    .model-scope .row label{color:var(--ink-dim); font-size:.95rem}
-    .model-scope .row input{width:100%; height:40px; border-radius:10px; background:var(--tile); border:1px solid var(--tile-border); color:var(--ink); padding:0 12px; font-size:.98rem}
-    .model-scope .row input:focus{outline:0; border-color:var(--ring); box-shadow:0 0 0 4px var(--ring)}
-    .model-scope .cta-bar{display:flex; gap:10px; flex-wrap:wrap; margin-top:6px}
-    .model-scope .btn{height:40px; padding:0 14px; border-radius:999px; border:1px solid var(--tile-border); background:var(--muted); color:var(--ink); font-weight:600; letter-spacing:.2px; cursor:pointer}
-    .model-scope .btn:hover{border-color:var(--ring)}
-    .model-scope .btn.primary{background:#111; border-color:#2a2a30; box-shadow:inset 0 0 0 1px #2a2a30}
-    .model-scope .btn.ghost{background:transparent}
-    .model-scope .results-grid{display:grid; gap:12px; grid-template-columns:repeat(4,minmax(0,1fr))}
-    @media (max-width:900px){ .model-scope .results-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
-    @media (max-width:560px){ .model-scope .results-grid{grid-template-columns:1fr} }
-    .model-scope .tile{background:var(--tile); border:1px solid var(--tile-border); border-radius:14px; padding:14px}
-    .model-scope .k-label{font-size:.8rem; color:var(--ink-dim); letter-spacing:.25px; text-transform:uppercase}
-    .model-scope .k-value{margin-top:6px; font-size:1.35rem; font-weight:800}
-    .model-scope .chart-card{margin-top:12px; padding:12px; background:var(--card); border:1px solid var(--tile-border); border-radius:14px}
-    .model-scope .disclaimer{margin:26px auto 0; color:var(--ink-dim); font-size:.92rem; max-width:980px}
-    .model-scope .note{color:var(--ink-dim); font-size:.9rem}
-/* hide model nav-menu on desktop */
-.model-scope .nav-menu {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .model-scope .crumbs {
-    display: none;
+    <!-- Acquisition Model — exact styling/markup from model1.html -->
+  <section id="model" style="display:none;">
+    <style>
+      :root{
+        --bg:#000000; --panel:#0e0e10; --muted:#1a1a1d; --ink:#ffffff; --ink-dim:#bdbdbd;
+        --accent:#ffffff; --ring:rgba(255,255,255,.15); --card:#101114; --tile:#0d0e11;
+        --tile-border:#1b1c21; --success:#23c55e; --warn:#f59e0b; --danger:#ef4444;
+      }
+      *{box-sizing:border-box}
+      .model-scope, .model-scope *{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+      .model-scope{background:var(--bg); color:var(--ink)}
+      /* Top nav (exact from model1.html) + white pulse line like footer */
+  .nav{
+    position:fixed;
+    top:0; left:0; right:0; width:100%;
+    z-index:1000;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(14px);
+    box-shadow:0 6px 26px rgba(0,0,0,0.6);
+    transition:background 0.25s ease,padding 0.25s ease,box-shadow 0.25s ease,border-color 0.25s ease;
   }
 
-  .model-scope .burger {
-    display: block;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.6rem;
-    cursor: pointer;
-    z-index: 1001;
+  .nav::after{
+    content:"";
+    position:absolute; bottom:0; left:0; right:0; height:2px;
+    background:#fff; opacity:.18;
+    animation:linePulse 6s ease-in-out infinite;
   }
 
+
+  .nav-inner{
+    max-width:1200px;
+    margin:0 auto;
+    padding:10px 16px;          /* match main navbar’s spacing */
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1.8rem;
+  }
+
+  .mark{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px}
+  .mark .eagle{filter:drop-shadow(0 0 12px rgba(255,255,255,.12))}
+  .spacer{flex:1}
+  .crumbs a{color:var(--ink-dim); text-decoration:none}
+  .crumbs a:hover{color:var(--ink)}
+  .crumbs{font-size:.95rem}
+  .crumbs .sep{opacity:.35; margin:0 6px}
+
+      .model-scope .wrap{
+    max-width:1200px;
+    margin:96px auto 32px;   /* 96px top to clear the fixed crumbs bar */
+    padding:0 20px;
+  }
+
+      .model-scope h1{font-size:40px; line-height:1.1; margin:12px 0 0}
+      .model-scope .sub{color:var(--ink-dim); margin-top:10px; max-width:880px}
+      .model-scope .grid{margin-top:28px; display:grid; gap:20px; grid-template-columns:380px 1fr}
+      @media (max-width:1024px){ .model-scope .grid{grid-template-columns:1fr} }
+      .model-scope .panel{background:var(--panel); border:1px solid var(--tile-border); border-radius:14px; padding:18px}
+      .model-scope .panel h3{margin:0 0 14px; font-size:.95rem; letter-spacing:.2px; color:var(--ink-dim); font-weight:600; text-transform:uppercase}
+      .model-scope .inputs{display:grid; gap:12px}
+      .model-scope .row{display:grid; grid-template-columns:1fr 140px; gap:10px; align-items:center}
+      .model-scope .row label{color:var(--ink-dim); font-size:.95rem}
+      .model-scope .row input{width:100%; height:40px; border-radius:10px; background:var(--tile); border:1px solid var(--tile-border); color:var(--ink); padding:0 12px; font-size:.98rem}
+      .model-scope .row input:focus{outline:0; border-color:var(--ring); box-shadow:0 0 0 4px var(--ring)}
+      .model-scope .cta-bar{display:flex; gap:10px; flex-wrap:wrap; margin-top:6px}
+      .model-scope .btn{height:40px; padding:0 14px; border-radius:999px; border:1px solid var(--tile-border); background:var(--muted); color:var(--ink); font-weight:600; letter-spacing:.2px; cursor:pointer}
+      .model-scope .btn:hover{border-color:var(--ring)}
+      .model-scope .btn.primary{background:#111; border-color:#2a2a30; box-shadow:inset 0 0 0 1px #2a2a30}
+      .model-scope .btn.ghost{background:transparent}
+      .model-scope .results-grid{ display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));}
+
+      @media (max-width:900px){ .model-scope .results-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+      @media (max-width:560px){ .model-scope .results-grid{grid-template-columns:1fr} }
+      .model-scope .tile{background:var(--tile); border:1px solid var(--tile-border); border-radius:14px; padding:14px}
+      .model-scope .k-label{font-size:.8rem; color:var(--ink-dim); letter-spacing:.25px; text-transform:uppercase}
+      .model-scope .k-value{margin-top:6px; font-size:1.35rem; font-weight:800}
+      .model-scope .chart-card{margin-top:12px; padding:12px; background:var(--card); border:1px solid var(--tile-border); border-radius:14px}
+      .model-scope .disclaimer{margin:26px auto 0; color:var(--ink-dim); font-size:.92rem; max-width:980px}
+      .model-scope .note{color:var(--ink-dim); font-size:.9rem}
+
+      /* === DSCR Gauge (ADD) =============================================== */
+.model-scope .dscr-card{
+  margin-top:12px; padding:12px;
+  background:var(--card); border:1px solid var(--tile-border); border-radius:14px;
+}
+.model-scope .dscr-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; color:var(--ink-dim); font-size:.9rem}
+.model-scope .dscr-tag{font-size:.78rem; color:#9aa; border:1px solid #222; padding:2px 8px; border-radius:8px}
+.model-scope .gauge .track{stroke:rgba(255,255,255,.10); stroke-width:10; fill:none}
+.model-scope .gauge .arc{stroke:#fff; stroke-width:10; fill:none; stroke-linecap:round; transition:stroke-dashoffset .6s ease}
+.model-scope .dscr-big{font-size:16px; font-weight:800; fill:#fff}
+
+  /* hide model nav-menu on desktop */
   .model-scope .nav-menu {
     display: none;
-    position: fixed;
-    top: 48px;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 0.9rem 1.4rem 1.4rem;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(14px);
-    box-shadow: 0 18px 40px rgba(0,0,0,0.7);
-    z-index: 1000;
   }
 
-  .model-scope .nav-menu.open {
+  @media (max-width: 768px) {
+    .model-scope .crumbs {
+      display: none;
+    }
+
+    .model-scope .burger {
+      display: block;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.6rem;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .model-scope .nav-menu {
+      display: none;
+      position: fixed;
+      top: 48px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.9rem 1.4rem 1.4rem;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+      z-index: 1000;
+    }
+
+    .model-scope .nav-menu.open {
+      display: flex;
+    }
+
+    .model-scope .nav-menu a {
+      color: #fff;
+      text-decoration: none;
+      width: 100%;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 0.45rem;
+      font-size: 1.05rem;
+    }
+  }
+
+      /* ===== Fade Hero + Reveal Navbar Brand ===== */
+  .hide-on-scroll {
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+  }
+  .hide-on-scroll.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Navbar brand fades in only after scroll */
+  .nav-brand-wordmark {
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+  }
+  .navbar.show-brand .nav-brand-wordmark {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Brand:
+    - hidden at top (inline styles on .nav-logo / .nav-wordmark)
+    - visible when navbar is solid (scrolled)
+    - visible when mobile menu is open (burger) */
+  .navbar.scrolled .nav-logo,
+  .navbar.scrolled .nav-wordmark,
+  .navbar.menu-open .nav-logo,
+  .navbar.menu-open .nav-wordmark {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  /* === Normalize navbar heights on main + model views === */
+
+  /* Set the same fixed header height for both bars */
+  .navbar,
+  .model-scope .nav {
+    height: 48px;              /* adjust to taste: 60–64px works well */
+  }
+
+  /* Make inner containers fill that height and align center */
+  .navbar .nav-content,
+  .model-scope .nav-inner {
+    height: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
     display: flex;
+    align-items: center;
+  }
+  /* Acquisition Blueprint strip */
+  .blueprint-strip {
+    padding-top: 1.5rem;
+    padding-bottom: 2.5rem;
   }
 
-  .model-scope .nav-menu a {
+  .blueprint-steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.6rem;
+    margin-top: 1.4rem;
+  }
+
+  .bp-step {
+    padding: 1rem 1.1rem;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: radial-gradient(circle at top, rgba(255,255,255,0.05), rgba(0,0,0,1));
+    backdrop-filter: blur(4px);
+    font-size: 0.9rem;
+    transition: transform 0.25s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* Hover "pop" effect */
+  .bp-step:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.1);
+    border-color: rgba(255,255,255,0.25);
+  }
+  .bp-step:active {
+    transform: scale(0.98);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
+  }
+
+
+  .bp-label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #ffffff;
+  }
+
+  .bp-text {
+    color: rgba(255,255,255,0.8);
+  }
+
+  @media (max-width: 900px) {
+    .blueprint-steps {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 600px) {
+    .blueprint-steps {
+      grid-template-columns: 1fr;
+    }
+  }
+  .strategy-list li {
+    margin: 0.6rem 0;
+    color: rgba(255,255,255,0.85);
+  }
+  .strategy-list strong {
     color: #fff;
-    text-decoration: none;
-    width: 100%;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 0.45rem;
-    font-size: 1.05rem;
   }
-}
 
-    /* ===== Fade Hero + Reveal Navbar Brand ===== */
-.hide-on-scroll {
-  opacity: 1;
-  transition: opacity 0.4s ease-out;
-}
-.hide-on-scroll.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Navbar brand fades in only after scroll */
-.nav-brand-wordmark {
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity 0.35s ease-out, transform 0.35s ease-out;
-}
-.navbar.show-brand .nav-brand-wordmark {
-  opacity: 1;
-  transform: translateY(0);
-}
-/* Brand:
-   - hidden at top (inline styles on .nav-logo / .nav-wordmark)
-   - visible when navbar is solid (scrolled)
-   - visible when mobile menu is open (burger) */
-.navbar.scrolled .nav-logo,
-.navbar.scrolled .nav-wordmark,
-.navbar.menu-open .nav-logo,
-.navbar.menu-open .nav-wordmark {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-
-/* === Normalize navbar heights on main + model views === */
-
-/* Set the same fixed header height for both bars */
-.navbar,
-.model-scope .nav {
-  height: 48px;              /* adjust to taste: 60–64px works well */
-}
-
-/* Make inner containers fill that height and align center */
-.navbar .nav-content,
-.model-scope .nav-inner {
-  height: 100%;
-  padding-top: 0;
-  padding-bottom: 0;
-  display: flex;
-  align-items: center;
-}
-/* Acquisition Blueprint strip */
-.blueprint-strip {
-  padding-top: 1.5rem;
-  padding-bottom: 2.5rem;
-}
-
-.blueprint-steps {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.6rem;
-  margin-top: 1.4rem;
-}
-
-.bp-step {
-  padding: 1rem 1.1rem;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: radial-gradient(circle at top, rgba(255,255,255,0.05), rgba(0,0,0,1));
-  backdrop-filter: blur(4px);
-  font-size: 0.9rem;
-  transition: transform 0.25s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-/* Hover "pop" effect */
-.bp-step:hover {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.1);
-  border-color: rgba(255,255,255,0.25);
-}
-.bp-step:active {
-  transform: scale(0.98);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
-}
-
-
-.bp-label {
-  display: block;
-  font-weight: 700;
-  margin-bottom: 0.35rem;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: #ffffff;
-}
-
-.bp-text {
-  color: rgba(255,255,255,0.8);
-}
-
-@media (max-width: 900px) {
-  .blueprint-steps {
-    grid-template-columns: 1fr 1fr;
+  .stats-bar {
+    background: linear-gradient(to right, rgba(255,255,255,0.05), rgba(0,0,0,0.7));
+    padding: 1.2rem 0;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
-}
-@media (max-width: 600px) {
-  .blueprint-steps {
-    grid-template-columns: 1fr;
+  .stats-inner {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
   }
-}
-.strategy-list li {
-  margin: 0.6rem 0;
-  color: rgba(255,255,255,0.85);
-}
-.strategy-list strong {
-  color: #fff;
+  .stats-inner h4 {
+    font-size: 1.4rem;
+    color: #fff;
+  }
+  .stats-inner p {
+    font-size: 0.8rem;
+    opacity: 0.75;
+    margin: 0.25rem 0 0;
+  }
+  @media(max-width:700px){
+    .stats-inner{flex-direction:column;gap:1rem;}
+  }
+
+.section-divider {
+  height:1px; width:80%; margin:3rem auto;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
 }
 
-.stats-bar {
-  background: linear-gradient(to right, rgba(255,255,255,0.05), rgba(0,0,0,0.7));
-  padding: 1.2rem 0;
-  text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-.stats-inner {
-  display: flex;
-  justify-content: center;
-  gap: 4rem;
-}
-.stats-inner h4 {
-  font-size: 1.4rem;
-  color: #fff;
-}
-.stats-inner p {
-  font-size: 0.8rem;
-  opacity: 0.75;
-  margin: 0.25rem 0 0;
-}
-@media(max-width:700px){
-  .stats-inner{flex-direction:column;gap:1rem;}
-}
+  </style>
 
 
-</style>
+    <div class="model-scope">
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="mark">
+        <img class="eagle" src="logo.jpg" alt="" width="26" height="26"/>
+        <div>Recompound Strategy</div>
+      </div>
 
+      <div class="spacer"></div>
 
-  <div class="model-scope">
-<div class="nav">
-  <div class="nav-inner">
-    <div class="mark">
-      <img class="eagle" src="logo.jpg" alt="" width="26" height="26"/>
-      <div>Recompound Strategy</div>
+      <!-- Mobile burger (only shows on small screens) -->
+      <button class="burger" id="modelBurger" aria-label="Menu">&#9776;</button>
+
+      <div class="crumbs" id="modelCrumbs">
+        <a href="#home">Home</a><span class="sep">/</span><a href="#">Acquisition Model</a>
+      </div>
     </div>
 
-    <div class="spacer"></div>
+    <!-- Burger dropdown menu (hidden by default) -->
+    <ul class="nav-menu" id="modelNavMenu">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
 
-    <!-- Mobile burger (only shows on small screens) -->
-    <button class="burger" id="modelBurger" aria-label="Menu">&#9776;</button>
 
-    <div class="crumbs" id="modelCrumbs">
-      <a href="#home">Home</a><span class="sep">/</span><a href="#">Acquisition Model</a>
+
+      <div class="wrap">
+        <h1>Acquisition Model<br>Ownership Scaling Framework</h1>
+        <div class="sub">
+          Illustrative simulator for LBO style acquisitions: price = <strong>EBITDA × multiple</strong>,
+          debt financing, amortization, growth & equity over time.
+        </div>
+
+        <div class="grid">
+          <!-- LEFT: INPUTS -->
+          <div class="panel">
+            <h3>Inputs</h3>
+            <div class="inputs">
+              <div class="row">
+                <label for="ebitda">EBITDA (Year 1)</label>
+                <input id="ebitda" type="number" value="250000" min="0" step="5000">
+              </div>
+              <div class="row">
+                <label for="multiple">Purchase Multiple (× EBITDA)</label>
+                <input id="multiple" type="number" value="4.0" min="1" step="0.25">
+              </div>
+              <div class="row">
+                <label for="down">Down Payment (%)</label>
+                <input id="down" type="number" value="20" min="0" max="100" step="1">
+              </div>
+              <div class="row">
+                <label for="rate">Interest Rate (APR %)</label>
+                <input id="rate" type="number" value="8" min="0" step="0.25">
+              </div>
+              <div class="row">
+                <label for="term">Loan Term (years)</label>
+                <input id="term" type="number" value="7" min="1" step="1">
+              </div>
+              <div class="row">
+                <label for="growth">EBITDA Growth (%/yr)</label>
+                <input id="growth" type="number" value="6" step="0.5">
+              </div>
+              <div class="row">
+                <label for="reinvest">Reinvestment (% of FCF)</label>
+                <input id="reinvest" type="number" value="25" step="1">
+              </div>
+              <div class="row">
+                <label for="horizon">Horizon (years)</label>
+                <input id="horizon" type="number" value="10" min="1" step="1">
+              </div>
+
+              <div class="cta-bar">
+                <button class="btn primary" id="runBtn">Run Model</button>
+                <button class="btn ghost" id="presetSMB">Preset: SMB</button>
+                <button class="btn ghost" id="presetPE">Preset: Tight PE</button>
+                <button class="btn ghost" id="presetStress">Preset: Stress</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: RESULTS -->
+<div class="panel">
+  <h3>Results</h3>
+  <div class="results-grid">
+    <div class="tile">
+      <div class="k-label">Purchase Price</div>
+      <div class="k-value" id="kPrice">$—</div>
+    </div>
+    <div class="tile">
+      <div class="k-label">Equity Invested</div>
+      <div class="k-value" id="kEquity">$—</div>
+    </div>
+    <div class="tile">
+      <div class="k-label">Debt @ Close</div>
+      <div class="k-value" id="kDebt">$—</div>
+    </div>
+    <div class="tile">
+      <div class="k-label">MOIC (Equity)</div>
+      <div class="k-value" id="kMoic">—×</div>
+    </div>
+    <!-- NEW: DSCR tile -->
+    <div class="tile">
+      <div class="k-label">Min DSCR (Term)</div>
+      <div class="k-value" id="kDSCR">—×</div>
     </div>
   </div>
 
-  <!-- Burger dropdown menu (hidden by default) -->
-  <ul class="nav-menu" id="modelNavMenu">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+
+  <div class="chart-card">
+    <canvas id="acqChart" height="320"></canvas>
+    <div id="chartErr" class="note" style="display:none; margin-top:8px; color:#fca5a5">
+      Chart.js didn’t load. Ensure you’re online or host the library locally.
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong>Disclaimer.</strong> This is an educational illustration. Assumptions are simplified
+    (constant exit multiple, straight-line annual payments, no taxes/working capital). Real outcomes will vary.
+  </div>
 </div>
 
-
-
-    <div class="wrap">
-      <h1>Acquisition Model<br>Ownership Scaling Framework</h1>
-      <div class="sub">
-        Illustrative simulator for LBO style acquisitions: price = <strong>EBITDA × multiple</strong>,
-        debt financing, amortization, growth & equity over time.
-      </div>
-
-      <div class="grid">
-        <!-- LEFT: INPUTS -->
-        <div class="panel">
-          <h3>Inputs</h3>
-          <div class="inputs">
-            <div class="row">
-              <label for="ebitda">EBITDA (Year 1)</label>
-              <input id="ebitda" type="number" value="250000" min="0" step="5000">
-            </div>
-            <div class="row">
-              <label for="multiple">Purchase Multiple (× EBITDA)</label>
-              <input id="multiple" type="number" value="4.0" min="1" step="0.25">
-            </div>
-            <div class="row">
-              <label for="down">Down Payment (%)</label>
-              <input id="down" type="number" value="20" min="0" max="100" step="1">
-            </div>
-            <div class="row">
-              <label for="rate">Interest Rate (APR %)</label>
-              <input id="rate" type="number" value="8" min="0" step="0.25">
-            </div>
-            <div class="row">
-              <label for="term">Loan Term (years)</label>
-              <input id="term" type="number" value="7" min="1" step="1">
-            </div>
-            <div class="row">
-              <label for="growth">EBITDA Growth (%/yr)</label>
-              <input id="growth" type="number" value="6" step="0.5">
-            </div>
-            <div class="row">
-              <label for="reinvest">Reinvestment (% of FCF)</label>
-              <input id="reinvest" type="number" value="25" step="1">
-            </div>
-            <div class="row">
-              <label for="horizon">Horizon (years)</label>
-              <input id="horizon" type="number" value="10" min="1" step="1">
-            </div>
-
-            <div class="cta-bar">
-              <button class="btn primary" id="runBtn">Run Model</button>
-              <button class="btn ghost" id="presetSMB">Preset: SMB</button>
-              <button class="btn ghost" id="presetPE">Preset: Tight PE</button>
-              <button class="btn ghost" id="presetStress">Preset: Stress</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- RIGHT: RESULTS -->
-        <div class="panel">
-          <h3>Results</h3>
-          <div class="results-grid">
-            <div class="tile"><div class="k-label">Purchase Price</div><div class="k-value" id="kPrice">$—</div></div>
-            <div class="tile"><div class="k-label">Equity Invested</div><div class="k-value" id="kEquity">$—</div></div>
-            <div class="tile"><div class="k-label">Debt @ Close</div><div class="k-value" id="kDebt">$—</div></div>
-            <div class="tile"><div class="k-label">MOIC (Equity)</div><div class="k-value" id="kMoic">—×</div></div>
-          </div>
-
-          <div class="chart-card">
-            <canvas id="acqChart" height="320"></canvas>
-            <div id="chartErr" class="note" style="display:none; margin-top:8px; color:#fca5a5">
-              Chart.js didn’t load. Ensure you’re online or host the library locally.
-            </div>
-          </div>
-
-          <div class="disclaimer">
-            <strong>Disclaimer.</strong> This is an educational illustration. Assumptions are simplified
-            (constant exit multiple, straight-line annual payments, no taxes/working capital). Real outcomes will vary.
-          </div>
         </div>
       </div>
+    </div>
+  </section>
+
+
+
+
+    <!-- Footer -->
+    <!-- ADD: Principles Rail -->
+<section class="site-section reveal" id="principles-rail" aria-label="Principles rail">
+  <div class="rail">
+    <div class="track">
+      <span>Cash Flow First</span>
+      <span>Reinvest Relentlessly</span>
+      <span>Structure Before Scale</span>
+      <span>Simple Over Complex</span>
+      <span>Control Over Everything</span>
+      <span>No Dead Capital</span>
+      <span>Cash Flow First</span>
+      <span>Reinvest Relentlessly</span>
+      <span>Structure Before Scale</span>
+      <span>Simple Over Complex</span>
+      <span>Control Over Everything</span>
+      <span>No Dead Capital</span>
     </div>
   </div>
 </section>
 
+<footer>
 
+      <div class="footer-row">
+        <span>&copy; 2025 Recompound Strategy. All rights reserved.</span>
+        <a href="#privacy" class="footer-link">Privacy Policy</a>
+        <a href="#disclaimer" class="footer-link">Disclaimer</a>
+        <span class="footer-socials">
+          <a href="https://instagram.com/recompound_strategy" target="_blank">
+            <svg width="21" height="21" viewBox="0 0 21 21" fill="none">
+              <rect x="3" y="3" width="15" height="15" rx="5" stroke="currentColor" stroke-width="2"/>
+              <circle cx="10.5" cy="10.5" r="3" stroke="currentColor" stroke-width="2"/>
+              <circle cx="15.5" cy="5.5" r="1" fill="currentColor"/>
+            </svg>
+            Instagram
+          </a>
+          <a href="mailto:info@recompoundstrategy.com">
+            <svg width="21" height="21" viewBox="0 0 21 21" fill="none">
+              <rect x="3" y="5" width="15" height="11" rx="3" stroke="currentColor" stroke-width="2"/>
+              <path d="M4 7l6.5 5 6.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Email
+          </a>
+        </span>
+      </div>
+    </footer>
 
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-row">
-      <span>&copy; 2025 Recompound Strategy. All rights reserved.</span>
-      <a href="#privacy" class="footer-link">Privacy Policy</a>
-      <span class="footer-socials">
-        <a href="https://instagram.com/recompound_strategy" target="_blank">
-          <svg width="21" height="21" viewBox="0 0 21 21" fill="none">
-            <rect x="3" y="3" width="15" height="15" rx="5" stroke="currentColor" stroke-width="2"/>
-            <circle cx="10.5" cy="10.5" r="3" stroke="currentColor" stroke-width="2"/>
-            <circle cx="15.5" cy="5.5" r="1" fill="currentColor"/>
-          </svg>
-          Instagram
-        </a>
-        <a href="mailto:info@recompoundstrategy.com">
-          <svg width="21" height="21" viewBox="0 0 21 21" fill="none">
-            <rect x="3" y="5" width="15" height="11" rx="3" stroke="currentColor" stroke-width="2"/>
-            <path d="M4 7l6.5 5 6.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          Email
-        </a>
-      </span>
+  <!-- NEW: Privacy modal -->
+  <div id="privacy" class="modal" aria-hidden="true" aria-labelledby="privacy-title" role="dialog">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__panel" role="document">
+      <button class="modal__close" aria-label="Close" data-close>&times;</button>
+      <h4 id="privacy-title">Privacy Policy</h4>
+      <p>We don’t sell data. We don’t run ads. If you email us, we’ll only use your message to reply, then archive it securely.</p>
+      <p>Basic site analytics may count page views and clicks with no personal profiles. You can request deletion of any email we hold by contacting <a href="mailto:info@recompoundstrategy.com">info@recompoundstrategy.com</a>.</p>
     </div>
-  </footer>
-<!-- NEW: Privacy modal -->
-<div id="privacy" class="modal" aria-hidden="true" aria-labelledby="privacy-title" role="dialog">
-  <div class="modal__backdrop" data-close></div>
-  <div class="modal__panel" role="document">
-    <button class="modal__close" aria-label="Close" data-close>&times;</button>
-    <h4 id="privacy-title">Privacy Policy</h4>
-    <p>We don’t sell data. We don’t run ads. If you email us, we’ll only use your message to reply, then archive it securely.</p>
-    <p>Basic site analytics may count page views and clicks with no personal profiles. You can request deletion of any email we hold by contacting <a href="mailto:info@recompoundstrategy.com">info@recompoundstrategy.com</a>.</p>
   </div>
-</div>
+  <!-- NEW: Disclaimer modal -->
+  <div id="disclaimer" class="modal" aria-hidden="true" aria-labelledby="disclaimer-title" role="dialog">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__panel" role="document">
+      <button class="modal__close" aria-label="Close" data-close>&times;</button>
+      <h4 id="disclaimer-title">Disclaimer</h4>
+      <p>
+        All information on this site is for general information only.
+        Nothing here is investment, legal, or tax advice, and nothing is an offer
+        or solicitation to buy or sell any security or investment.
+      </p>
+      <p>
+        Any examples or descriptions of strategies are illustrative and may change
+        without notice. Investing and the use of leverage involve risk,
+        including the potential loss of capital.
+      </p>
+    </div>
+  </div>
 
-  <!-- Scripts (same logic, monochrome UI) -->
-  <script>
-// Disable browser scroll restoration so we always control position
-if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    <!-- Scripts (same logic, monochrome UI) -->
+    <script>
+  // Disable browser scroll restoration so we always control position
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
-// Always load every page at top — including model view — no scroll animation
-window.addEventListener('load', () => {
-  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-});
-
-
-
-    window.addEventListener('DOMContentLoaded', function(){
-      setTimeout(function(){
-        document.querySelectorAll('.fade-in').forEach((el,i)=>setTimeout(()=>el.classList.add('visible'),150+i*110));
-      },100);
-    });
-
-    // Mobile menu (sync with navbar + brand)
-const burger = document.getElementById('burgerBtn');
-const navMenu = document.getElementById('mainNavMenu');
-const navbar = document.querySelector('.navbar');
-
-if (burger && navMenu && navbar) {
-  // Toggle menu
-  burger.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const isOpen = navMenu.classList.toggle('open');
-    burger.classList.toggle('active', isOpen);
-    navbar.classList.toggle('menu-open', isOpen); // controls logo/wordmark visibility
+  // Always load every page at top — including model view — no scroll animation
+  window.addEventListener('load', () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   });
 
-  // Close on nav link click (mobile)
-  document.querySelectorAll('.nav-menu a').forEach((a) => {
-    a.addEventListener('click', () => {
-      if (window.innerWidth <= 768) {
+
+
+      window.addEventListener('DOMContentLoaded', function(){
+        setTimeout(function(){
+          document.querySelectorAll('.fade-in').forEach((el,i)=>setTimeout(()=>el.classList.add('visible'),150+i*110));
+        },100);
+      });
+
+      // Mobile menu (sync with navbar + brand)
+  const burger = document.getElementById('burgerBtn');
+  const navMenu = document.getElementById('mainNavMenu');
+  const navbar = document.querySelector('.navbar');
+
+  if (burger && navMenu && navbar) {
+    // Toggle menu
+    burger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = navMenu.classList.toggle('open');
+      burger.classList.toggle('active', isOpen);
+      navbar.classList.toggle('menu-open', isOpen); // controls logo/wordmark visibility
+    });
+
+    // Close on nav link click (mobile)
+    document.querySelectorAll('.nav-menu a').forEach((a) => {
+      a.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          navMenu.classList.remove('open');
+          burger.classList.remove('active');
+          navbar.classList.remove('menu-open');
+        }
+      });
+    });
+
+    // Close on outside click (mobile)
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth > 768) return;
+      if (
+        navMenu.classList.contains('open') &&
+        !navMenu.contains(e.target) &&
+        e.target !== burger
+      ) {
         navMenu.classList.remove('open');
         burger.classList.remove('active');
         navbar.classList.remove('menu-open');
       }
     });
-  });
 
-  // Close on outside click (mobile)
-  document.addEventListener('click', (e) => {
-    if (window.innerWidth > 768) return;
-    if (
-      navMenu.classList.contains('open') &&
-      !navMenu.contains(e.target) &&
-      e.target !== burger
-    ) {
+    // Reset on resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        navMenu.classList.remove('open');
+        burger.classList.remove('active');
+        navbar.classList.remove('menu-open');
+      }
+    });
+
+    // Clean initial state
+    window.addEventListener('DOMContentLoaded', () => {
       navMenu.classList.remove('open');
       burger.classList.remove('active');
       navbar.classList.remove('menu-open');
-    }
-  });
-
-  // Reset on resize
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-      navMenu.classList.remove('open');
-      burger.classList.remove('active');
-      navbar.classList.remove('menu-open');
-    }
-  });
-
-  // Clean initial state
-  window.addEventListener('DOMContentLoaded', () => {
-    navMenu.classList.remove('open');
-    burger.classList.remove('active');
-    navbar.classList.remove('menu-open');
-  });
-}
-
-    window.addEventListener('DOMContentLoaded',()=>{ navMenu.classList.remove('open'); burger.classList.remove('active'); });
-  </script>
-
-  <!-- Chart logic you already had, but colors switched to monochrome -->
-  <script>
-    // Helper to rebuild the main chart canvas cleanly
-    function replaceChartCanvas(){
-      const old=document.getElementById('dcaChart'); if(!old) return;
-      const p=old.parentNode; p.removeChild(old);
-      const c=document.createElement('canvas'); c.id='dcaChart'; c.height=380; c.style.maxWidth='100%'; c.style.width='100%'; c.style.margin='1.3rem auto 0'; c.style.display='block'; c.style.background='transparent'; p.appendChild(c);
-      window.dcaChartCtx=c.getContext('2d'); window.dcaChart=null;
-    }
-
-    // === Minimal demo stubs so file loads without your data code ===
-    // If you already have your big data script, keep it; just ensure datasets use white / gray.
-    window.addEventListener('DOMContentLoaded', ()=>{
-      // If a canvas with id dcaChart exists somewhere, draw a placeholder monochrome chart
-      replaceChartCanvas();
-      if(!window.dcaChartCtx) return;
-      const years = Array.from({length:10},(_,i)=>2015+i);
-      const vals1 = years.map((_,i)=>10000*Math.pow(1.12,i));
-      const vals2 = years.map((_,i)=>10000*Math.pow(0.98,i));
-
-      // You can remove this if your real chart logic runs.
-      // This just guarantees you see the monochrome styling.
-      // Requires Chart.js in your page otherwise skip.
-      if(typeof Chart!=='undefined'){
-        new Chart(window.dcaChartCtx,{
-          type:'line',
-          data:{
-            labels:years,
-            datasets:[
-              { label:'Investment', data:vals1, borderColor:'#ffffff', backgroundColor:'rgba(255,255,255,0.12)', fill:true, pointRadius:0, tension:0.21, borderWidth:6 },
-              { label:'Cash (inflation-adjusted)', data:vals2, borderColor:'#bbbbbb', backgroundColor:'rgba(187,187,187,0.13)', fill:true, pointRadius:0, tension:0.19, borderWidth:6 }
-            ]
-          },
-          options:{
-            plugins:{ legend:{ labels:{ color:'#fff', font:{ size:22, weight:'bold' } } }, tooltip:{ mode:'index', intersect:false }},
-            scales:{ x:{ display:false, grid:{ display:false } }, y:{ display:false, min:0, grid:{ display:false } } },
-            responsive:true, animation:{ duration:900 }, maintainAspectRatio:false
-          }
-        });
-      }
     });
+  }
+
+      window.addEventListener('DOMContentLoaded',()=>{ navMenu.classList.remove('open'); burger.classList.remove('active'); });
+</script>
+
+
+    <!-- Chart logic you already had, but colors switched to monochrome -->
+    <script>
+      // Helper to rebuild the main chart canvas cleanly
+      function replaceChartCanvas(){
+        const old=document.getElementById('dcaChart'); if(!old) return;
+        const p=old.parentNode; p.removeChild(old);
+        const c=document.createElement('canvas'); c.id='dcaChart'; c.height=380; c.style.maxWidth='100%'; c.style.width='100%'; c.style.margin='1.3rem auto 0'; c.style.display='block'; c.style.background='transparent'; p.appendChild(c);
+        window.dcaChartCtx=c.getContext('2d'); window.dcaChart=null;
+      }
+
+      // === Minimal demo stubs so file loads without your data code ===
+      // If you already have your big data script, keep it; just ensure datasets use white / gray.
+      window.addEventListener('DOMContentLoaded', ()=>{
+        // If a canvas with id dcaChart exists somewhere, draw a placeholder monochrome chart
+        replaceChartCanvas();
+        if(!window.dcaChartCtx) return;
+        const years = Array.from({length:10},(_,i)=>2015+i);
+        const vals1 = years.map((_,i)=>10000*Math.pow(1.12,i));
+        const vals2 = years.map((_,i)=>10000*Math.pow(0.98,i));
+
+        // You can remove this if your real chart logic runs.
+        // This just guarantees you see the monochrome styling.
+        // Requires Chart.js in your page otherwise skip.
+        if(typeof Chart!=='undefined'){
+          new Chart(window.dcaChartCtx,{
+            type:'line',
+            data:{
+              labels:years,
+              datasets:[
+                { label:'Investment', data:vals1, borderColor:'#ffffff', backgroundColor:'rgba(255,255,255,0.12)', fill:true, pointRadius:0, tension:0.21, borderWidth:6 },
+                { label:'Cash (inflation-adjusted)', data:vals2, borderColor:'#bbbbbb', backgroundColor:'rgba(187,187,187,0.13)', fill:true, pointRadius:0, tension:0.19, borderWidth:6 }
+              ]
+            },
+            options:{
+              plugins:{ legend:{ labels:{ color:'#fff', font:{ size:22, weight:'bold' } } }, tooltip:{ mode:'index', intersect:false }},
+              scales:{ x:{ display:false, grid:{ display:false } }, y:{ display:false, min:0, grid:{ display:false } } },
+              responsive:true, animation:{ duration:900 }, maintainAspectRatio:false
+            }
+          });
+        }
+      });
+    </script>
+    <script>
+    // Scroll-reveal intersection observer
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // animate once
+        }
+      });
+    }, { threshold: 0.2 });
+    reveals.forEach(el => observer.observe(el));
   </script>
   <script>
-  // Scroll-reveal intersection observer
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target); // animate once
-      }
-    });
-  }, { threshold: 0.2 });
-  reveals.forEach(el => observer.observe(el));
-</script>
-<script>
-  // Active nav link on scroll
-  const sections = [
-    document.getElementById('home'),
-    document.getElementById('about'),
-    document.getElementById('what-we-do'),
-    document.getElementById('principles'),
-    document.getElementById('contact')
-  ].filter(Boolean);
+    // Active nav link on scroll
+    const sections = [
+      document.getElementById('home'),
+      document.getElementById('about'),
+      document.getElementById('what-we-do'),
+      document.getElementById('principles'),
+      document.getElementById('contact')
+    ].filter(Boolean);
 
-  const navLinks = Array.from(document.querySelectorAll('.nav-menu a'));
+    const navLinks = Array.from(document.querySelectorAll('.nav-menu a'));
 
-  function setActive(hash) {
-    navLinks.forEach(a => {
-      const isActive = a.getAttribute('href') === hash;
-      a.classList.toggle('active', isActive);
-      if (isActive) {
-        a.setAttribute('aria-current', 'page');
-      } else {
-        a.removeAttribute('aria-current');
-      }
-    });
-  }
-
-  const spy = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        setActive('#' + entry.target.id);
-      }
-    });
-  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
-
-  sections.forEach(sec => spy.observe(sec));
-
-  // Navbar scroll state:
-  // show logo + wordmark ONLY after passing the hero section
-  const heroSection = document.querySelector('.hero-section');
-  let brandTrigger = 40;
-
-  if (heroSection && navbar) {
-    // hero bottom position relative to document
-    brandTrigger =
-      heroSection.offsetTop +
-      heroSection.offsetHeight -
-      (navbar.offsetHeight || 0);
-  }
-
-  function updateNavbarScrollState() {
-  if (!navbar) return;
-
-  const scrolledPastHero = window.scrollY > brandTrigger;
-
-  if (scrolledPastHero) {
-    // Navbar goes solid
-    navbar.classList.add('scrolled');
-
-    // Mobile menu (burger open) should also be solid
-    if (typeof navMenu !== 'undefined' && navMenu) {
-      navMenu.classList.add('menu-solid');
-    }
-  } else {
-    // Navbar back to translucent
-    navbar.classList.remove('scrolled');
-
-    // Mobile menu matches hero state (translucent)
-    if (typeof navMenu !== 'undefined' && navMenu) {
-      navMenu.classList.remove('menu-solid');
-    }
-  }
-}
-
-
-  window.addEventListener('scroll', updateNavbarScrollState, { passive: true });
-  window.addEventListener('resize', () => {
-    if (heroSection && navbar) {
-      brandTrigger =
-        heroSection.offsetTop +
-        heroSection.offsetHeight -
-        (navbar.offsetHeight || 0);
-      updateNavbarScrollState();
-    }
-  });
-
-  updateNavbarScrollState();
-
-</script>
-
-
-
-<script>
-// Close on backdrop click or X button
-document.addEventListener('click', (e) => {
-  const closeEl = e.target.closest('[data-close]');
-  if (!closeEl) return;
-  e.preventDefault();
-
-  const modal = document.getElementById('privacy');
-  if (modal) modal.style.display = 'none';
-
-  // If we were at #privacy, drop the hash WITHOUT scrolling or triggering layout switches
-  if (location.hash === '#privacy') {
-    history.replaceState(null, "", window.location.pathname + window.location.search);
-  }
-});
-
-
-// Close on ESC
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && location.hash === '#privacy') {
-    e.preventDefault();
-
-    const modal = document.getElementById('privacy');
-    if (modal) modal.style.display = 'none';
-
-    history.replaceState(null, "", window.location.pathname + window.location.search);
-  }
-});
-
-// Keep CSS state in sync if the hash changes (back/forward buttons, etc.)
-window.addEventListener('hashchange', () => {
-  const modal = document.getElementById('privacy');
-  if (!modal) return;
-  // If there is no hash, ensure modal is hidden; if '#privacy', ensure visible.
-  modal.style.display = (!location.hash) ? 'none' :
-                        (location.hash === '#privacy' ? 'block' : 'none');
-});
-
-// Ensure initial state matches the current hash on load
-window.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('privacy');
-  if (!modal) return;
-  modal.style.display = (location.hash === '#privacy') ? 'block' : 'none';
-});
-</script>
-
-<script>
-  const hero = document.getElementById('home');
-  const model = document.getElementById('model');
-  const siteNav = document.querySelector('.navbar');
-  const siteFooter = document.querySelector('footer');
-  const siteSections = Array.from(document.querySelectorAll('.site-section')); // about, what-we-do, principles, contact
-
-  const showHome = () => {
-  if (hero) hero.style.display = '';
-  if (model) model.style.display = 'none';
-  siteSections.forEach(s => s.style.display = '');
-  const statsBar = document.querySelector('.stats-bar');
-  if (statsBar) statsBar.style.display = '';            // SHOW stats bar on home
-  if (siteNav) siteNav.style.display = '';
-  if (siteFooter) siteFooter.style.display = '';
-  document.body.style.overflow = 'auto';
-  window.scrollTo(0,0);
-};
-
-
-  const showModel = () => {
-  if (hero) hero.style.display = 'none';
-  if (model) model.style.display = '';                 
-  siteSections.forEach(s => s.style.display = 'none'); 
-  const statsBar = document.querySelector('.stats-bar');
-  if (statsBar) statsBar.style.display = 'none';        // HIDE stats bar on model
-  if (siteNav) siteNav.style.display = 'none';          
-  if (siteFooter) siteFooter.style.display = '';   
-  document.body.style.overflow = 'auto';               
-  window.scrollTo(0,0);
-};
-
-
-  const openFromHash = () => {
-  // If URL is #model -> always switch into model view
-  if (location.hash === '#model') {
-    showModel();
-    return;
-  }
-
-  // When we're in model view and user clicks a link to home/contact,
-  // return to the main site and scroll to that section.
-  if (
-    model &&
-    model.style.display !== 'none' &&
-    location.hash &&
-    location.hash !== '#privacy' &&
-    location.hash !== '#model'
-  ) {
-    // Go back to home layout first
-    showHome();
-
-    // Then scroll to the chosen section smoothly
-    const target = document.querySelector(location.hash);
-    if (target) {
-      setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
-    }
-    return;
-  }
-
-  // Normal in-page navigation works as usual
-};
-
-
-  openFromHash();
-  window.addEventListener('hashchange', openFromHash);
-
-
-
-  // Navbar link to open model
-  const navModel = document.getElementById('nav-model');
-  if (navModel) navModel.addEventListener('click', (e) => {
-    e.preventDefault();
-    location.hash = '#model';
-  });
-
-  // ------- Model logic (same core math)
-  const $ = id => document.getElementById(id);
-  const fmtMoney = (v, d=0) => isFinite(v)
-    ? v.toLocaleString(undefined, {style:'currency', currency:'USD', maximumFractionDigits:d, minimumFractionDigits:d})
-    : '—';
-  const fmtX = v => (isFinite(v) ? v.toFixed(2)+'×' : '—×');
-
-  const el = {
-    ebitda: $('ebitda'), multiple: $('multiple'), down: $('down'), rate: $('rate'),
-    term: $('term'), growth: $('growth'), reinvest: $('reinvest'), horizon: $('horizon'),
-    kPrice: $('kPrice'), kEquity: $('kEquity'), kDebt: $('kDebt'), kMoic: $('kMoic'), err: $('chartErr')
-  };
-
-  function amortPayment(P, r, n){
-    if (r <= 0) return P / Math.max(n,1);
-    return P * (r) / (1 - Math.pow(1+r, -n));
-  }
-
-  function runModel(){
-    const EBITDA0 = +el.ebitda.value || 0;
-    const multiple = +el.multiple.value || 0;
-    const downPct  = Math.min(100, Math.max(0, +el.down.value || 0)) / 100;
-    const apr      = (+el.rate.value || 0) / 100;
-    const termY    = Math.max(1, +el.term.value || 1);
-    const growth   = (+el.growth.value || 0) / 100;
-    const reinvest = Math.min(100, Math.max(0, +el.reinvest.value || 0)) / 100;
-    const horizon  = Math.max(1, +el.horizon.value || 1);
-
-    const price = EBITDA0 * multiple;
-    const equity0 = price * downPct;
-    const debt0 = price - equity0;
-
-    const years=[], eSeries=[], dSeries=[], eqSeries=[], exitMultiple = multiple;
-    const payment = amortPayment(debt0, apr, termY);
-    let bal = debt0;
-
-    for (let y=0; y<=horizon; y++){
-      years.push('Y'+y);
-      const e = EBITDA0 * Math.pow(1+growth, y);
-      eSeries.push(e);
-
-      if (y>0 && bal>0){
-        const interest = bal * apr;
-        const principal = Math.min(bal, payment - interest);
-        bal = Math.max(0, bal - principal);
-      }
-      dSeries.push(bal);
-
-      const eqVal = Math.max(0, e * exitMultiple - bal);
-      eqSeries.push(eqVal);
-    }
-
-    el.kPrice.textContent  = fmtMoney(price, 0);
-    el.kEquity.textContent = fmtMoney(equity0, 0);
-    el.kDebt.textContent   = fmtMoney(debt0, 0);
-    el.kMoic.textContent   = (equity0>0) ? ((eqSeries.at(-1)/equity0).toFixed(2)+'×') : '—×';
-
-    drawChart(years, eSeries, dSeries, eqSeries);
-  }
-
-  let chart;
-    function drawChart(labels, ebitda, debt, equity){
-      if (typeof Chart === 'undefined'){
-        el.err.style.display = 'block';
-        return;
-      }
-      el.err.style.display = 'none';
-
-      const ctx = document.getElementById('acqChart').getContext('2d');
-      if (chart){ chart.destroy(); }
-      chart = new Chart(ctx, {
-        type:'bar',
-        data:{
-          labels,
-          datasets:[
-            {
-              type:'bar',
-              label:'EBITDA (bars)',
-              data: ebitda,
-              yAxisID:'y',
-              borderWidth:0,
-              backgroundColor:'rgba(255,255,255,0.10)',
-              borderRadius:6
-            },
-            {
-              type:'line',
-              label:'Debt Remaining',
-              data: debt,
-              yAxisID:'y',
-              borderWidth:2
-            },
-            {
-              type:'line',
-              label:'Equity Value',
-              data: equity,
-              yAxisID:'y',
-              borderWidth:2
-            }
-          ]
-        },
-        options:{
-          responsive:true,
-          maintainAspectRatio:false,
-          plugins:{
-            legend:{labels:{color:'#e7e7e7'}}
-          },
-          scales:{
-            x: {
-              ticks:{ color:'#bdbdbd' },
-              grid:{ color:'rgba(255,255,255,.05)'}
-            },
-            y: {
-              ticks:{
-                color:'#bdbdbd',
-                callback:(v)=>'$'+Number(v).toLocaleString()
-              },
-              grid:{ color:'rgba(255,255,255,.06)'}
-            }
-          }
+    function setActive(hash) {
+      navLinks.forEach(a => {
+        const isActive = a.getAttribute('href') === hash;
+        a.classList.toggle('active', isActive);
+        if (isActive) {
+          a.setAttribute('aria-current', 'page');
+        } else {
+          a.removeAttribute('aria-current');
         }
       });
     }
 
-  // presets + bind
-  document.getElementById('runBtn')?.addEventListener('click', runModel);
-  document.getElementById('presetSMB')?.addEventListener('click', ()=>{
-    el.ebitda.value=400000; el.multiple.value=4.5; el.down.value=20;
-    el.rate.value=8; el.term.value=7; el.growth.value=6; el.reinvest.value=25; el.horizon.value=10; runModel();
-  });
-  document.getElementById('presetPE')?.addEventListener('click', ()=>{
-    el.ebitda.value=1500000; el.multiple.value=7; el.down.value=30;
-    el.rate.value=7; el.term.value=6; el.growth.value=5; el.reinvest.value=30; el.horizon.value=7; runModel();
-  });
-  document.getElementById('presetStress')?.addEventListener('click', ()=>{
-    el.ebitda.value=800000; el.multiple.value=5; el.down.value=10;
-    el.rate.value=11; el.term.value=5; el.growth.value=0; el.reinvest.value=0; el.horizon.value=8; runModel();
-  });
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActive('#' + entry.target.id);
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
 
-  // initialize numbers/chart once
-  runModel();
-</script>
+    sections.forEach(sec => spy.observe(sec));
 
+    // Navbar scroll state:
+    // show logo + wordmark ONLY after passing the hero section
+    const heroSection = document.querySelector('.hero-section');
+    let brandTrigger = 40;
 
-<script>
-  (function(){
-    const bar = document.getElementById('scroll-progress');
-    if(!bar) return;
-    const update = () => {
-      const h = document.documentElement;
-      const scrolled = h.scrollTop || document.body.scrollTop;
-      const height = h.scrollHeight - h.clientHeight;
-      const pct = height > 0 ? (scrolled / height) * 100 : 0;
-      bar.style.width = pct + '%';
-    };
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    update();
-  })();
-</script>
-<script>
-  (function(){
-    const title = document.querySelector('.hero-title');
-    const sub   = document.querySelector('.hero-subtitle');
-    if(!title || !sub) return;
+    if (heroSection && navbar) {
+      // hero bottom position relative to document
+      brandTrigger =
+        heroSection.offsetTop +
+        heroSection.offsetHeight -
+        (navbar.offsetHeight || 0);
+    }
 
-    let raf = null, targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+    function updateNavbarScrollState() {
+    if (!navbar) return;
 
-    const onMove = (e) => {
-      const { innerWidth:w, innerHeight:h } = window;
-      const x = (e.clientX / w - 0.5) * 2; // -1..1
-      const y = (e.clientY / h - 0.5) * 2;
-      targetX = x * 6;   // degrees-ish for rotate/translate feeling
-      targetY = y * 6;
-      if (!raf) raf = requestAnimationFrame(tick);
-    };
+    const scrolledPastHero = window.scrollY > brandTrigger;
 
-    const lerp = (a,b,t)=>a+(b-a)*t;
+    if (scrolledPastHero) {
+      // Navbar goes solid
+      navbar.classList.add('scrolled');
 
-    const tick = () => {
-      currentX = lerp(currentX, targetX, 0.08);
-      currentY = lerp(currentY, targetY, 0.08);
-
-      title.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
-      sub.style.transform   = `translate3d(${currentX * 0.6}px, ${currentY * 0.6}px, 0)`;
-
-      if (Math.abs(currentX - targetX) > 0.1 || Math.abs(currentY - targetY) > 0.1) {
-        raf = requestAnimationFrame(tick);
-      } else {
-        raf = null;
+      // Mobile menu (burger open) should also be solid
+      if (typeof navMenu !== 'undefined' && navMenu) {
+        navMenu.classList.add('menu-solid');
       }
-    };
+    } else {
+      // Navbar back to translucent
+      navbar.classList.remove('scrolled');
 
-    window.addEventListener('mousemove', onMove, { passive: true });
-  })();
-  
-</script>
-<script>
-  // --- Mobile burger inside model view ---
-  const modelBurger = document.getElementById('modelBurger');
-  const modelNav = document.getElementById('modelNavMenu');
-  const modelCrumbs = document.getElementById('modelCrumbs');
+      // Mobile menu matches hero state (translucent)
+      if (typeof navMenu !== 'undefined' && navMenu) {
+        navMenu.classList.remove('menu-solid');
+      }
+    }
+  }
 
-  if (modelBurger && modelNav) {
-    modelBurger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = modelNav.classList.toggle('open');
-      modelBurger.classList.toggle('active', isOpen);
-      if (isOpen) {
-        modelCrumbs.style.display = 'none';
-      } else {
-        modelCrumbs.style.display = '';
+
+    window.addEventListener('scroll', updateNavbarScrollState, { passive: true });
+    window.addEventListener('resize', () => {
+      if (heroSection && navbar) {
+        brandTrigger =
+          heroSection.offsetTop +
+          heroSection.offsetHeight -
+          (navbar.offsetHeight || 0);
+        updateNavbarScrollState();
       }
     });
 
-    // Close when clicking outside
-    document.addEventListener('click', (e) => {
-      if (window.innerWidth > 768) return;
-      if (
-        modelNav.classList.contains('open') &&
-        !modelNav.contains(e.target) &&
-        e.target !== modelBurger
-      ) {
-        modelNav.classList.remove('open');
-        modelBurger.classList.remove('active');
-        modelCrumbs.style.display = '';
+    updateNavbarScrollState();
+
+  </script>
+
+
+
+<script>
+  // Sync all modals with the current hash (#privacy, #disclaimer, etc.)
+  function syncModalsWithHash() {
+    const hash = location.hash;
+    const modals = document.querySelectorAll('.modal');
+
+    modals.forEach((modal) => {
+      if ('#' + modal.id === hash) {
+        modal.style.display = 'block';
+      } else {
+        modal.style.display = 'none';
       }
     });
   }
+
+  // Run once on load
+  window.addEventListener('DOMContentLoaded', syncModalsWithHash);
+
+  // Run on back/forward / hash changes
+  window.addEventListener('hashchange', syncModalsWithHash);
+
+  // Close on backdrop click or X button
+  document.addEventListener('click', (e) => {
+    const closeEl = e.target.closest('[data-close]');
+    if (!closeEl) return;
+    e.preventDefault();
+
+    const modal = closeEl.closest('.modal');
+    if (!modal) return;
+
+    // Hide this modal
+    modal.style.display = 'none';
+
+    // If the hash matches this modal, clear it so :hash and sync function agree
+    const hash = '#' + modal.id;
+    if (location.hash === hash) {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+  });
+
+  // Close current modal with ESC (privacy, disclaimer, etc.)
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (!location.hash) return;
+
+    const modal = document.querySelector(location.hash);
+    if (!modal || !modal.classList.contains('modal')) return;
+
+    e.preventDefault();
+    modal.style.display = 'none';
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  });
 </script>
-</body>
-</html>
+
+
+  <script>
+    const hero = document.getElementById('home');
+    const model = document.getElementById('model');
+    const siteNav = document.querySelector('.navbar');
+    const siteFooter = document.querySelector('footer');
+    const siteSections = Array.from(document.querySelectorAll('.site-section')); // about, what-we-do, principles, contact
+
+    const showHome = () => {
+    if (hero) hero.style.display = '';
+    if (model) model.style.display = 'none';
+    siteSections.forEach(s => s.style.display = '');
+    const statsBar = document.querySelector('.stats-bar');
+    if (statsBar) statsBar.style.display = '';            // SHOW stats bar on home
+    if (siteNav) siteNav.style.display = '';
+    if (siteFooter) siteFooter.style.display = '';
+    document.body.style.overflow = 'auto';
+    window.scrollTo(0,0);
+  };
+
+
+    const showModel = () => {
+    if (hero) hero.style.display = 'none';
+    if (model) model.style.display = '';                 
+    siteSections.forEach(s => s.style.display = 'none'); 
+    const statsBar = document.querySelector('.stats-bar');
+    if (statsBar) statsBar.style.display = 'none';        // HIDE stats bar on model
+    if (siteNav) siteNav.style.display = 'none';          
+    if (siteFooter) siteFooter.style.display = '';   
+    document.body.style.overflow = 'auto';               
+    window.scrollTo(0,0);
+  };
+
+
+    const openFromHash = () => {
+    // If URL is #model -> always switch into model view
+    if (location.hash === '#model') {
+      showModel();
+      return;
+    }
+
+    // When we're in model view and user clicks a link to home/contact,
+    // return to the main site and scroll to that section.
+    if (
+      model &&
+      model.style.display !== 'none' &&
+      location.hash &&
+      location.hash !== '#privacy' &&
+      location.hash !== '#model'
+    ) {
+      // Go back to home layout first
+      showHome();
+
+      // Then scroll to the chosen section smoothly
+      const target = document.querySelector(location.hash);
+      if (target) {
+        setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+      }
+      return;
+    }
+
+    // Normal in-page navigation works as usual
+  };
+
+
+    openFromHash();
+    window.addEventListener('hashchange', openFromHash);
+
+
+
+    // Navbar link to open model
+    const navModel = document.getElementById('nav-model');
+    if (navModel) navModel.addEventListener('click', (e) => {
+      e.preventDefault();
+      location.hash = '#model';
+    });
+
+    // ------- Model logic (same core math)
+    const $ = id => document.getElementById(id);
+    const fmtMoney = (v, d=0) => isFinite(v)
+      ? v.toLocaleString(undefined, {style:'currency', currency:'USD', maximumFractionDigits:d, minimumFractionDigits:d})
+      : '—';
+    const fmtX = v => (isFinite(v) ? v.toFixed(2)+'×' : '—×');
+
+    const el = {
+      ebitda: $('ebitda'), multiple: $('multiple'), down: $('down'), rate: $('rate'),
+      term: $('term'), growth: $('growth'), reinvest: $('reinvest'), horizon: $('horizon'),
+      kPrice: $('kPrice'), kEquity: $('kEquity'), kDebt: $('kDebt'), kMoic: $('kMoic'), err: $('chartErr')
+    };
+
+    function amortPayment(P, r, n){
+      if (r <= 0) return P / Math.max(n,1);
+      return P * (r) / (1 - Math.pow(1+r, -n));
+    }
+
+    function runModel(){
+      const EBITDA0 = +el.ebitda.value || 0;
+      const multiple = +el.multiple.value || 0;
+      const downPct  = Math.min(100, Math.max(0, +el.down.value || 0)) / 100;
+      const apr      = (+el.rate.value || 0) / 100;
+      const termY    = Math.max(1, +el.term.value || 1);
+      const growth   = (+el.growth.value || 0) / 100;
+      const reinvest = Math.min(100, Math.max(0, +el.reinvest.value || 0)) / 100;
+      const horizon  = Math.max(1, +el.horizon.value || 1);
+
+      const price = EBITDA0 * multiple;
+      const equity0 = price * downPct;
+      const debt0 = price - equity0;
+
+      const years=[], eSeries=[], dSeries=[], eqSeries=[], exitMultiple = multiple;
+      const payment = amortPayment(debt0, apr, termY);
+      let bal = debt0;
+
+      for (let y=0; y<=horizon; y++){
+        years.push('Y'+y);
+        const e = EBITDA0 * Math.pow(1+growth, y);
+        eSeries.push(e);
+
+        if (y>0 && bal>0){
+          const interest = bal * apr;
+          const principal = Math.min(bal, payment - interest);
+          bal = Math.max(0, bal - principal);
+        }
+        dSeries.push(bal);
+
+        const eqVal = Math.max(0, e * exitMultiple - bal);
+        eqSeries.push(eqVal);
+      }
+
+      el.kPrice.textContent  = fmtMoney(price, 0);
+      el.kEquity.textContent = fmtMoney(equity0, 0);
+      el.kDebt.textContent   = fmtMoney(debt0, 0);
+          el.kMoic.textContent   = (equity0>0) ? ((eqSeries.at(-1)/equity0).toFixed(2)+'×') : '—×';
+
+    // Min DSCR over loan term: EBITDA / annual debt service
+    let minD = Infinity;
+    for (let i = 1; i <= Math.min(horizon, termY); i++) {
+      const ds = payment > 0 ? (eSeries[i] / payment) : Infinity;
+      if (isFinite(ds)) minD = Math.min(minD, ds);
+    }
+    const dscr = (minD === Infinity || !isFinite(minD)) ? 0 : Math.max(0, minD);
+    const kDSCR = document.getElementById('kDSCR');
+    if (kDSCR) {
+      kDSCR.textContent = dscr ? dscr.toFixed(2) + '×' : '—×';
+    }
+
+    drawChart(years, eSeries, dSeries, eqSeries);
+
+
+    }
+
+    let chart;
+      function drawChart(labels, ebitda, debt, equity){
+        if (typeof Chart === 'undefined'){
+          el.err.style.display = 'block';
+          return;
+        }
+        el.err.style.display = 'none';
+
+        const ctx = document.getElementById('acqChart').getContext('2d');
+        if (chart){ chart.destroy(); }
+        chart = new Chart(ctx, {
+          type:'bar',
+          data:{
+            labels,
+            datasets:[
+              {
+                type:'bar',
+                label:'EBITDA (bars)',
+                data: ebitda,
+                yAxisID:'y',
+                borderWidth:0,
+                backgroundColor:'rgba(255,255,255,0.10)',
+                borderRadius:6
+              },
+              {
+                type:'line',
+                label:'Debt Remaining',
+                data: debt,
+                yAxisID:'y',
+                borderWidth:2
+              },
+              {
+                type:'line',
+                label:'Equity Value',
+                data: equity,
+                yAxisID:'y',
+                borderWidth:2
+              }
+            ]
+          },
+          options:{
+            responsive:true,
+            maintainAspectRatio:false,
+            plugins:{
+              legend:{labels:{color:'#e7e7e7'}}
+            },
+            scales:{
+              x: {
+                ticks:{ color:'#bdbdbd' },
+                grid:{ color:'rgba(255,255,255,.05)'}
+              },
+              y: {
+                ticks:{
+                  color:'#bdbdbd',
+                  callback:(v)=>'$'+Number(v).toLocaleString()
+                },
+                grid:{ color:'rgba(255,255,255,.06)'}
+              }
+            }
+          }
+        });
+      }
+
+    // presets + bind
+    document.getElementById('runBtn')?.addEventListener('click', runModel);
+    document.getElementById('presetSMB')?.addEventListener('click', ()=>{
+      el.ebitda.value=400000; el.multiple.value=4.5; el.down.value=20;
+      el.rate.value=8; el.term.value=7; el.growth.value=6; el.reinvest.value=25; el.horizon.value=10; runModel();
+    });
+    document.getElementById('presetPE')?.addEventListener('click', ()=>{
+      el.ebitda.value=1500000; el.multiple.value=7; el.down.value=30;
+      el.rate.value=7; el.term.value=6; el.growth.value=5; el.reinvest.value=30; el.horizon.value=7; runModel();
+    });
+    document.getElementById('presetStress')?.addEventListener('click', ()=>{
+      el.ebitda.value=800000; el.multiple.value=5; el.down.value=10;
+      el.rate.value=11; el.term.value=5; el.growth.value=0; el.reinvest.value=0; el.horizon.value=8; runModel();
+    });
+
+    // initialize numbers/chart once
+    runModel();
+  </script>
+
+
+  <script>
+    (function(){
+      const bar = document.getElementById('scroll-progress');
+      if(!bar) return;
+      const update = () => {
+        const h = document.documentElement;
+        const scrolled = h.scrollTop || document.body.scrollTop;
+        const height = h.scrollHeight - h.clientHeight;
+        const pct = height > 0 ? (scrolled / height) * 100 : 0;
+        bar.style.width = pct + '%';
+      };
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+  </script>
+  <script>
+    (function(){
+      const title = document.querySelector('.hero-title');
+      const sub   = document.querySelector('.hero-subtitle');
+      if(!title || !sub) return;
+
+      let raf = null, targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+
+      const onMove = (e) => {
+        const { innerWidth:w, innerHeight:h } = window;
+        const x = (e.clientX / w - 0.5) * 2; // -1..1
+        const y = (e.clientY / h - 0.5) * 2;
+        targetX = x * 6;   // degrees-ish for rotate/translate feeling
+        targetY = y * 6;
+        if (!raf) raf = requestAnimationFrame(tick);
+      };
+
+      const lerp = (a,b,t)=>a+(b-a)*t;
+
+      const tick = () => {
+        currentX = lerp(currentX, targetX, 0.08);
+        currentY = lerp(currentY, targetY, 0.08);
+
+        title.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+        sub.style.transform   = `translate3d(${currentX * 0.6}px, ${currentY * 0.6}px, 0)`;
+
+        if (Math.abs(currentX - targetX) > 0.1 || Math.abs(currentY - targetY) > 0.1) {
+          raf = requestAnimationFrame(tick);
+        } else {
+          raf = null;
+        }
+      };
+
+      window.addEventListener('mousemove', onMove, { passive: true });
+    })();
+    
+  </script>
+  <script>
+    // --- Mobile burger inside model view ---
+    const modelBurger = document.getElementById('modelBurger');
+    const modelNav = document.getElementById('modelNavMenu');
+    const modelCrumbs = document.getElementById('modelCrumbs');
+
+    if (modelBurger && modelNav) {
+      modelBurger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = modelNav.classList.toggle('open');
+        modelBurger.classList.toggle('active', isOpen);
+        if (isOpen) {
+          modelCrumbs.style.display = 'none';
+        } else {
+          modelCrumbs.style.display = '';
+        }
+      });
+
+      // Close when clicking outside
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth > 768) return;
+        if (
+          modelNav.classList.contains('open') &&
+          !modelNav.contains(e.target) &&
+          e.target !== modelBurger
+        ) {
+          modelNav.classList.remove('open');
+          modelBurger.classList.remove('active');
+          modelCrumbs.style.display = '';
+        }
+      });
+    }
+    // === System Console (ADD) ===
+(() => {
+  const el = document.getElementById('lastCycle');
+  if (el) el.textContent = new Date().toISOString().slice(0,10);
+})();
+
+  </script>
+  <script>
+(function(){
+  const stats = Array.from(document.querySelectorAll('.stats-inner .stat'));
+  if (!stats.length) return;
+
+  const easeOut = t => 1 - Math.pow(1 - t, 4); // easeOutQuart
+
+  function formatNumber(v, fixed, mode){
+    if (mode === 'abbr'){
+      const abs = Math.abs(v);
+      const units = [
+        {v:1e9, s:'B'},
+        {v:1e6, s:'M'},
+        {v:1e3, s:'K'}
+      ];
+      for (const u of units){
+        if (abs >= u.v) return (v/u.v).toFixed(fixed).replace(/\.0+$/,'') + u.s;
+      }
+      return v.toFixed(fixed).replace(/\.0+$/,'');
+    }
+    return fixed ? v.toFixed(fixed) : Math.round(v).toLocaleString();
+  }
+
+  function runCount(box){
+    if (box.dataset.done) return;
+    const span   = box.querySelector('.stat-num');
+    const target = +box.dataset.target || 0;
+    const prefix = box.dataset.prefix || "";
+    const suffix = box.dataset.suffix || "";
+    const fixed  = +box.dataset.fixed  || 0;
+    const mode   = (box.dataset.format || "").toLowerCase(); // "abbr" or ""
+    const dur    = Math.max(400, +box.dataset.duration || 2400); // default slower
+
+    if (!span || !isFinite(target) || target <= 0){
+      box.dataset.done = 1; return;
+    }
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      span.textContent = prefix + formatNumber(target, fixed, mode) + suffix;
+      box.dataset.done = 1; return;
+    }
+
+    const start = performance.now();
+    function tick(now){
+      const t = Math.min(1, (now - start) / dur);
+      const v = target * easeOut(t);
+      span.textContent = prefix + formatNumber(v, fixed, mode) + suffix;
+      if (t < 1) requestAnimationFrame(tick);
+      else box.dataset.done = 1;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function isVisible(el){
+    const r = el.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const threshold = 0.2;
+    const minVisible = Math.min(r.height * threshold, 80);
+    const visible = Math.min(vh, r.bottom) - Math.max(0, r.top);
+    return visible >= minVisible;
+  }
+
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if (e.isIntersecting){ runCount(e.target); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.25 });
+    stats.forEach(s => io.observe(s));
+  } else {
+    const onScroll = () => stats.forEach(s => { if (!s.dataset.done && isVisible(s)) runCount(s); });
+    ['scroll','resize','load'].forEach(ev => window.addEventListener(ev, onScroll, {passive:true}));
+    onScroll();
+  }
+
+  stats.forEach(s => { if (isVisible(s)) runCount(s); });
+})();
+</script>
+
+  </body>
+  </html>
