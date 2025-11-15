@@ -283,7 +283,7 @@
   .hero-logo {
     position: relative;
     z-index: 2;
-    width: 150px;
+    width: 200px;
     max-width: 34vw;
     margin: 0 auto 1rem;
     opacity: 0;
@@ -411,12 +411,36 @@
       .footer-socials a:hover{ color:#000; background:#fff; padding:.1rem .35rem; border-radius:.35rem; }
       .footer-socials svg{ margin-right:6px; vertical-align:middle; }
 
-      /* Mobile footer tweaks */
+            /* Mobile footer tweaks */
       @media (max-width:700px){
-        footer{ min-height:52px !important; padding:11px 0 9px !important; font-size:.96rem; }
-        .footer-row{ flex-direction:column !important; gap:.3rem !important; width:100vw !important; justify-content:center !important; align-items:center !important; margin:0 !important; }
-        .footer-link,.footer-socials{ font-size:.89rem !important; margin:0 !important; flex-wrap:wrap; }
+        footer{
+          min-height:52px !important;
+          font-size:.96rem;
+        }
+
+        /* keep everything on a row and allow wrapping */
+        .footer-row{
+          flex-direction:row !important;
+          flex-wrap:wrap;
+          gap:.4rem !important;
+          width:100vw !important;
+          justify-content:center !important;
+          align-items:center !important;
+          margin:0 !important;
+        }
+
+        .footer-link{
+          font-size:.89rem !important;
+          margin:0 .25rem !important;   /* small side spacing between Privacy / Disclaimer */
+        }
+
+        .footer-socials{
+          font-size:.89rem !important;
+          margin:0 !important;
+          flex-wrap:wrap;
+        }
       }
+
 
       /* Hide scrollbars (as you had) */
       body *::-webkit-scrollbar{ display:none !important; width:0 !important; height:0 !important; background:transparent !important; }
@@ -425,14 +449,21 @@
       @media (max-width:900px){
         .section-inner, .chart-section-inner, .about-bottom-inner{ padding:1rem .5rem 1.2rem .5rem; }
       }
-      @media (max-width:600px){
+            @media (max-width:600px){
         .section-inner, .about-bottom-inner, .chart-section-inner{ padding:1.2rem .7rem 1.1rem .7rem !important; }
         .hero-section{ padding-left:.7rem !important; padding-right:.7rem !important; }
         .navbar ul{ padding-left:.2rem; padding-right:.2rem; }
         .site-section h3{ font-size:1.3rem; }
         .contact-btn{ padding:.75rem 1.2rem; font-size:1rem; }
-        .footer-row{ flex-direction:column; gap:.7rem; }
+
+        /* keep footer in row even on smallest screens */
+        .footer-row{
+          flex-direction:row !important;
+          flex-wrap:wrap;
+          gap:.4rem;
+        }
       }
+
       /* ===== Scroll Reveal Animation ===== */
   .reveal {
     opacity: 0;
@@ -658,7 +689,7 @@
 <section class="stats-bar reveal">
   <div class="stats-inner">
     <div class="stat"
-     data-target="1200000"
+     data-target="1000000"
      data-prefix="€"
      data-suffix="+"
      data-format="abbr"
@@ -737,20 +768,21 @@
 
 
     <!-- PRINCIPLES -->
-    <section class="site-section reveal" id="principles">
-      <div class="section-inner">
-        <h3>Principles</h3>
-        <ul>
-          <li><strong>Cash Flow First:</strong> If it doesn’t generate cash flow, it’s not a priority.</li>
-          <li><strong>Reinvest Relentlessly:</strong> Profits get redeployed to scale.</li>
-          <li><strong>Simple Structures:</strong> Keep things clean, legal, and easy to control.</li>
-          <li><strong>Long Term Horizon:</strong> Think decades ahead, not months.</li>
-          <li><strong>Quiet Moves:</strong> Wealth grows in silence, not noise.</li>
-          <li><strong>Control Over Everything:</strong> Own it, structure it, protect it.</li>
-          <li><strong>No Dead Capital:</strong> Idle money is wasted opportunity.</li>
-        </ul>
-      </div>
-    </section>
+<section class="site-section reveal" id="principles">
+  <div class="section-inner">
+    <h3>Principles</h3>
+    <ul class="strategy-list">
+      <li><strong>Cash Flow First:</strong> If it doesn’t generate cash flow, it’s not a priority.</li>
+      <li><strong>Reinvest Relentlessly:</strong> Profits get redeployed to scale.</li>
+      <li><strong>Simple Structures:</strong> Keep things clean, legal, and easy to control.</li>
+      <li><strong>Long Term Horizon:</strong> Think decades ahead, not months.</li>
+      <li><strong>Quiet Moves:</strong> Wealth grows in silence, not noise.</li>
+      <li><strong>Control Over Everything:</strong> Own it, structure it, protect it.</li>
+      <li><strong>No Dead Capital:</strong> Idle money is wasted opportunity.</li>
+    </ul>
+  </div>
+</section>
+
 
     <section class="site-section reveal" id="structure">
     <div class="section-inner">
@@ -763,9 +795,6 @@
       </ul>
     </div>
   </section>
-
-<div class="section-divider"></div>
-
 
     <!-- CTA -->
     <section class="site-section reveal" id="contact">
