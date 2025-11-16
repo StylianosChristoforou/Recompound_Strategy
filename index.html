@@ -90,6 +90,67 @@
       rgba(0,0,0,1) 100%
     );
   }
+/* Ticker change colors */
+.ticker-change{
+  font-size:.7rem;
+  font-weight:600;
+  margin-left:4px;
+}
+.ticker-change.up{
+  color:#4ade80;
+}
+.ticker-change.down{
+  color:#f97373;
+}
+
+/* Footer / top market rail */
+.rail{
+  width:100%;
+  overflow:hidden;
+  border-top:1px solid #111;
+  border-bottom:1px solid #111;
+  background:#000;
+  font-size:.82rem;
+  white-space:nowrap;
+
+  /* put it visually under the fixed navbar */
+  margin-top:48px;  /* navbar height */
+}
+
+.track{
+  display:inline-flex;
+  align-items:center;
+  animation:tickerScroll 35s linear infinite; /* same speed everywhere */
+}
+
+.ticker-item{
+  display:inline-flex;
+  align-items:center;
+  gap:.35rem;
+  padding:.45rem 1.4rem;
+  color:#fff;
+}
+
+.ticker-label{
+  font-weight:600;
+}
+
+.ticker-value{
+  opacity:.85;
+}
+
+/* Infinite horizontal scroll */
+@keyframes tickerScroll{
+  from { transform:translateX(0); }
+  to   { transform:translateX(-50%); }
+}
+
+@media (max-width:700px){
+  .ticker-item{
+    padding:.4rem 1rem;
+    font-size:.78rem;
+  }
+}
 
 
   /* ===== Navbar ===== */
@@ -340,7 +401,6 @@
     margin:0 auto;
     padding:3.2rem 16px 1.5rem; /* match navbar side padding */
   }
-
       .site-section h3{
         font-size:2.09rem; margin-bottom:1.2rem; color:#fff; font-weight:900; letter-spacing:0;
         position:relative;
@@ -349,12 +409,63 @@
         content:""; display:block; height:3px; width:88px; margin-top:10px; border-radius:3px; background:#fff;
       }
       /* Hide the h3 underline on the CTA section */
-  #contact .section-inner h3::after{
-    display:none;
-  }
+      #contact .section-inner h3::after{
+        display:none;
+      }
 
-      .site-section p, .site-section ul li, .about-bottom-inner p{ color:#fff !important; }
-      .site-section ul{ margin-left:1.3rem; }
+      .site-section p, .site-section ul li, .about-bottom-inner p{
+        color:#fff !important;
+      }
+      .site-section ul{
+        margin-left:1.3rem;
+      }
+
+      /* ----------------------------- */
+      /* CONTACT FORM STYLES (NEW)     */
+      /* ----------------------------- */
+
+      .contact-form{
+        max-width:480px;
+        margin:1.8rem auto 0;
+        text-align:left;
+      }
+      .contact-form .form-field{
+        margin-bottom:1rem;
+      }
+      .contact-form label{
+        display:block;
+        font-size:.86rem;
+        margin-bottom:.35rem;
+        color:#cccccc;
+        letter-spacing:.05em;
+        text-transform:uppercase;
+      }
+      .contact-form input,
+      .contact-form select,
+      .contact-form textarea{
+        width:100%;
+        padding:.6rem .8rem;
+        border-radius:6px;
+        border:1px solid #333333;
+        background:#050505;
+        color:#ffffff;
+        font-size:.95rem;
+      }
+      .contact-form textarea{
+        min-height:120px;
+        resize:vertical;
+      }
+      .contact-form input:focus,
+      .contact-form select:focus,
+      .contact-form textarea:focus{
+        outline:none;
+        border-color:#ffffff;
+        box-shadow:0 0 0 1px #ffffff;
+      }
+      #contact .contact-btn{
+        margin-top:.4rem;
+      }
+
 
       /* ===== Chart sections (still black) ===== */
       .chart-section{ width:100vw; background:#000 !important; margin:0; display:block; min-height:440px; position:relative; }
@@ -614,23 +725,6 @@
  <style>
   /* === Institutional Grid (ADD) === */
   .hero-section{ position:relative; }
-
-  /* === Principles Rail (ADD) === */
-  #principles-rail .rail{
-    overflow:hidden; border-top:1px solid #111; border-bottom:1px solid #111;
-    background:#0a0a0a; padding:8px 0;
-  }
-  #principles-rail .track{
-    display:flex; gap:40px; white-space:nowrap; will-change:transform;
-    animation:rail-move 22s linear infinite;
-  }
-  #principles-rail .track span{
-    color:#ccc; letter-spacing:.08em; text-transform:uppercase; font-size:.78rem;
-  }
-  @keyframes rail-move {
-    from { transform:translateX(0); }
-    to   { transform:translateX(-50%); }
-  }
 </style>
 </head>
 
@@ -661,13 +755,8 @@
     <li><a href="#contact">Contact</a></li>
     <li><a href="#model" id="nav-model">Acquisition Model</a></li>
   </ul>
-
-
     </div>
   </nav>
-  
-
-
 
   <!-- Hero -->
 <section class="hero-section" id="home">
@@ -754,36 +843,6 @@
     </div>
   </section>
 
-
-  <section class="testimonial-section site-section reveal">
-    <div class="section-inner">
-      <blockquote>
-        <span class="testimonial-quote">
-          “The first rule of compounding: Never interrupt it unnecessarily.”
-        </span>
-        <span class="testimonial-author">— Charlie Munger</span>
-      </blockquote>
-    </div>
-  </section>
-
-
-    <!-- PRINCIPLES -->
-<section class="site-section reveal" id="principles">
-  <div class="section-inner">
-    <h3>Principles</h3>
-    <ul class="strategy-list">
-      <li><strong>Cash Flow First:</strong> If it doesn’t generate cash flow, it’s not a priority.</li>
-      <li><strong>Reinvest Relentlessly:</strong> Profits get redeployed to scale.</li>
-      <li><strong>Simple Structures:</strong> Keep things clean, legal, and easy to control.</li>
-      <li><strong>Long Term Horizon:</strong> Think decades ahead, not months.</li>
-      <li><strong>Quiet Moves:</strong> Wealth grows in silence, not noise.</li>
-      <li><strong>Control Over Everything:</strong> Own it, structure it, protect it.</li>
-      <li><strong>No Dead Capital:</strong> Idle money is wasted opportunity.</li>
-    </ul>
-  </div>
-</section>
-
-
     <section class="site-section reveal" id="structure">
     <div class="section-inner">
       <h3>Structure & Strategy</h3>
@@ -796,15 +855,78 @@
     </div>
   </section>
 
+  <section class="testimonial-section site-section reveal">
+    <div class="section-inner">
+      <blockquote>
+        <span class="testimonial-quote">
+          “The first rule of compounding: Never interrupt it unnecessarily.”
+        </span>
+        <span class="testimonial-author">— Charlie Munger</span>
+      </blockquote>
+    </div>
+  </section>
+
     <!-- CTA -->
-    <section class="site-section reveal" id="contact">
-      <div class="section-inner" style="text-align:center;">
-        <h3>Partnerships &amp; Opportunities</h3>
-        <p>For investment, development, or strategic collaboration, contact us.</p>
-        <a href="mailto:info@recompoundstrategy.com" class="contact-btn">Contact</a>
-        <p style="margin-top:1rem;color:#ffffff;"><em>Strategy isn’t loud.</em></p>
+<section class="site-section" id="contact">
+  <div class="section-inner">
+    <div class="contact-accordion">
+      <button
+        class="contact-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="contact-panel"
+      >
+        <span class="contact-toggle__label">Partnerships &amp; Opportunities</span>
+        <span class="contact-toggle__icon">+</span>
+      </button>
+
+      <div
+        id="contact-panel"
+        class="contact-panel"
+        hidden
+      >
+        <p class="contact-intro">
+          For investment, development, or strategic collaboration, contact us.
+        </p>
+
+        <form class="contact-form"
+              action="mailto:recompoundstrategy@proton.me"
+              method="post"
+              enctype="text/plain">
+          <label>
+            Name
+            <input type="text" name="name" required>
+          </label>
+
+          <label>
+            Email
+            <input type="email" name="email" required>
+          </label>
+
+          <label>
+            Reason
+            <select name="reason" required>
+              <option value="" disabled selected>Select…</option>
+              <option value="partnership">Partnership / JV</option>
+              <option value="deal">Deal / Asset Introduction</option>
+              <option value="advisory">Advisory / Consultation</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+
+          <label>
+            Message
+            <textarea name="message" required></textarea>
+          </label>
+
+          <button type="submit" class="btn contact-btn">Send</button>
+        </form>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
+
+
 
 
     <!-- Acquisition Model — exact styling/markup from model1.html -->
@@ -1096,6 +1218,93 @@
   background:linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
 }
 
+/* Contact accordion – pops like Acquisition Blueprint cards */
+.contact-accordion{
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* main pill button */
+.contact-toggle{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid #ffffff;
+  background: transparent;
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.22s ease,
+    box-shadow 0.28s ease;
+}
+
+.contact-toggle__label{
+  flex: 1;
+}
+
+.contact-toggle__icon{
+  font-size: 1.4rem;
+  line-height: 1;
+  transform: translateY(-1px);
+  transition: transform 0.2s ease;
+}
+
+/* HOVER + OPEN STATE → pop up like blueprint cards */
+.contact-toggle:hover,
+.contact-toggle:focus-visible,
+.contact-toggle[aria-expanded="true"]{
+  background: radial-gradient(circle at top, rgba(255,255,255,0.08), rgba(0,0,0,1));
+  border-color: rgba(255,255,255,0.25);
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 0 18px rgba(255,255,255,0.16);
+}
+
+/* icon turns into X only when open */
+.contact-toggle[aria-expanded="true"] .contact-toggle__icon{
+  transform: rotate(45deg); /* + becomes x */
+}
+
+
+/* sliding panel underneath */
+.contact-panel{
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  transition:
+    max-height 0.45s ease,
+    opacity 0.35s ease,
+    margin-top 0.35s ease;
+}
+
+/* when open we ONLY change opacity + margin; max-height is handled in JS */
+.contact-panel.open{
+  opacity: 1;
+  margin-top: 1.5rem;
+}
+
+.contact-intro{
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+/* small tweak for mobile spacing */
+@media (max-width: 600px){
+  .contact-accordion{
+    padding: 0 1rem;
+  }
+}
+
+
   </style>
 
 
@@ -1225,33 +1434,9 @@
       </div>
     </div>
   </section>
-
-
-
-
+  
     <!-- Footer -->
-    <!-- ADD: Principles Rail -->
-<section class="site-section reveal" id="principles-rail" aria-label="Principles rail">
-  <div class="rail">
-    <div class="track">
-      <span>Cash Flow First</span>
-      <span>Reinvest Relentlessly</span>
-      <span>Structure Before Scale</span>
-      <span>Simple Over Complex</span>
-      <span>Control Over Everything</span>
-      <span>No Dead Capital</span>
-      <span>Cash Flow First</span>
-      <span>Reinvest Relentlessly</span>
-      <span>Structure Before Scale</span>
-      <span>Simple Over Complex</span>
-      <span>Control Over Everything</span>
-      <span>No Dead Capital</span>
-    </div>
-  </div>
-</section>
-
 <footer>
-
       <div class="footer-row">
         <span>&copy; 2025 Recompound Strategy. All rights reserved.</span>
         <a href="#privacy" class="footer-link">Privacy Policy</a>
@@ -1985,6 +2170,66 @@
   stats.forEach(s => { if (isVisible(s)) runCount(s); });
 })();
 </script>
+<script>
+(function () {
+  const toggle = document.querySelector('.contact-toggle');
+  const panel  = document.getElementById('contact-panel');
+  const navbar = document.querySelector('.navbar');
+
+  if (!toggle || !panel) return;
+
+  const NAV_OFFSET = (navbar ? navbar.offsetHeight : 0) + 16;
+
+  // start closed
+  panel.hidden = true;
+  panel.style.maxHeight = '0px';
+
+  toggle.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+    if (isOpen) {
+      // closing
+      const currentHeight = panel.scrollHeight;
+      panel.style.maxHeight = currentHeight + 'px'; // start height
+      void panel.offsetHeight;                      // force reflow
+      panel.style.maxHeight = '0px';
+      panel.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    } else {
+      // opening (no scroll here yet)
+      panel.hidden = false;
+      panel.classList.add('open');
+      const targetHeight = panel.scrollHeight;
+      panel.style.maxHeight = targetHeight + 'px';
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+  });
+
+  panel.addEventListener('transitionend', (e) => {
+    if (e.propertyName !== 'max-height') return;
+
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+    if (!isOpen) {
+      // fully closed → hide so it doesn't trap focus
+      panel.hidden = true;
+      return;
+    }
+
+    // fully opened → lock height and then scroll
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+
+    const rect = panel.getBoundingClientRect();
+    const y =
+      (window.pageYOffset || window.scrollY || 0) +
+      rect.top -
+      NAV_OFFSET;
+
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  });
+})();
+</script>
+
 
   </body>
   </html>
