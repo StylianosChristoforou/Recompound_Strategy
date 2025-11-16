@@ -402,23 +402,63 @@
     padding:3.2rem 16px 1.5rem; /* match navbar side padding */
   }
       .site-section h3{
-        font-size:2.09rem; margin-bottom:1.2rem; color:#fff; font-weight:900; letter-spacing:0;
-        position:relative;
-      }
-      .site-section h3::after{
-        content:""; display:block; height:3px; width:88px; margin-top:10px; border-radius:3px; background:#fff;
-      }
-      /* Hide the h3 underline on the CTA section */
-      #contact .section-inner h3::after{
-        display:none;
-      }
+  font-size:2.09rem;
+  margin-bottom:1.2rem;
+  color:#fff;
+  font-weight:900;
+  letter-spacing:0;
+  position:relative;
+}
 
-      .site-section p, .site-section ul li, .about-bottom-inner p{
-        color:#fff !important;
-      }
-      .site-section ul{
-        margin-left:1.3rem;
-      }
+.site-section h3::after{
+  content:"";
+  display:block;
+  height:3px;
+  width:88px;
+  margin-top:10px;
+  border-radius:3px;
+  background:#fff;
+}
+.site-section h3{
+  font-size:2.09rem;
+  margin-bottom:1.2rem;
+  color:#fff;
+  font-weight:900;
+  letter-spacing:0;
+  position:relative;
+}
+
+.site-section h3::after{
+  content:"";
+  display:block;
+  height:3px;
+  width:88px;
+  margin-top:10px;
+  border-radius:3px;
+  background:#fff;
+}
+
+/* Hide the underline on the CTA section */
+#contact .section-inner h3::after{
+  display:none;
+}
+
+/* NEW: center Partnerships & Opportunities block */
+#contact .section-inner{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+
+#contact .section-inner h3{
+  margin:0 0 1.2rem 0;
+}
+
+/* Hide the underline on the CTA section (keep this if you don't want a line) */
+#contact .section-inner h3::after{
+  display:none;
+}
 
       /* ----------------------------- */
       /* CONTACT FORM STYLES (NEW)     */
@@ -866,9 +906,15 @@
     </div>
   </section>
 
-    <!-- CTA -->
+<!-- CTA -->
 <section class="site-section" id="contact">
   <div class="section-inner">
+
+    <h3>Partnerships &amp; Opportunities</h3>
+    <p class="contact-intro">
+      For investment, development, or strategic collaboration, contact us.
+    </p>
+
     <div class="contact-accordion">
       <button
         class="contact-toggle"
@@ -876,7 +922,7 @@
         aria-expanded="false"
         aria-controls="contact-panel"
       >
-        <span class="contact-toggle__label">Partnerships &amp; Opportunities</span>
+        <span class="contact-toggle__label">Contact</span>
         <span class="contact-toggle__icon">+</span>
       </button>
 
@@ -885,10 +931,6 @@
         class="contact-panel"
         hidden
       >
-        <p class="contact-intro">
-          For investment, development, or strategic collaboration, contact us.
-        </p>
-
         <form class="contact-form"
               action="mailto:recompoundstrategy@proton.me"
               method="post"
@@ -925,6 +967,7 @@
     </div>
   </div>
 </section>
+
 
 
 
@@ -1221,12 +1264,14 @@
 /* Contact accordion – pops like Acquisition Blueprint cards */
 .contact-accordion{
   max-width: 520px;
-  margin: 0 auto;
+  margin: 1.6rem auto 0;
+  text-align: center;
 }
 
-/* main pill button */
+/* main pill button – starts as a centered pill, then grows to full width */
 .contact-toggle{
-  width: 100%;
+  width: 220px;                    /* collapsed width */
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1244,7 +1289,8 @@
     background 0.2s ease,
     border-color 0.2s ease,
     transform 0.22s ease,
-    box-shadow 0.28s ease;
+    box-shadow 0.28s ease,
+    width 0.38s ease;              /* sideways expansion */
 }
 
 .contact-toggle__label{
@@ -1266,6 +1312,11 @@
   border-color: rgba(255,255,255,0.25);
   transform: translateY(-4px) scale(1.03);
   box-shadow: 0 0 18px rgba(255,255,255,0.16);
+}
+
+/* when open → pill stretches to full width of its container */
+.contact-toggle[aria-expanded="true"]{
+  width: 100%;
 }
 
 /* icon turns into X only when open */
@@ -1292,9 +1343,11 @@
   margin-top: 1.5rem;
 }
 
+/* heading sentence center-aligned above the pill */
 .contact-intro{
-  text-align: left;
-  margin-bottom: 1.5rem;
+  text-align: center;
+  margin-top: 0.9rem;
+  margin-bottom: 0.4rem;
 }
 
 /* small tweak for mobile spacing */
@@ -1303,6 +1356,7 @@
     padding: 0 1rem;
   }
 }
+
 
 
   </style>
