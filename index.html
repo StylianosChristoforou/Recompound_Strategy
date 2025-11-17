@@ -1508,12 +1508,13 @@
   }
 
   .stats-bar {
-    background: linear-gradient(to right, rgba(255,255,255,0.05), rgba(0,0,0,0.7));
-    padding: 1.2rem 0;
+    background: #000000;              /* same pure black as the rest */
+    padding: 2.0rem 0 2.1rem;         /* a bit more breathing room */
     text-align: center;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-top: none;                 /* no strip/divider line */
+    border-bottom: none;
   }
+
   .stats-inner {
     display: flex;
     justify-content: center;
@@ -1561,9 +1562,11 @@
 
 
 .stat h4{
-  font-size:1.7rem;
+  font-size:2.4rem;        /* larger headline numbers on PC */
   margin:0;
+  letter-spacing:0.03em;
 }
+
 
 .stat p{
   margin:0.25rem 0 0;
@@ -1574,11 +1577,13 @@
 }
 
 .stats-caption{
-  font-size:0.78rem;
-  letter-spacing:0.18em;
+  margin-top:0.45rem;
+  font-size:0.85rem;
+  letter-spacing:0.22em;
   text-transform:uppercase;
-  opacity:0.8;
+  opacity:0.86;
 }
+
 
 /* mobile */
 @media(max-width:700px){
