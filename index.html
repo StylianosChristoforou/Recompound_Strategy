@@ -321,27 +321,71 @@
     }
   }
 
-  /* ===== Hero (full viewport, no darkening) ===== */
-  .hero-section{
-    width:100vw; min-height:100vh;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    position:relative; z-index:1; text-align:center;
-    padding-top:5.5rem; padding-bottom:0;
-    color:#fff; background:#000; overflow:hidden;
+/* ===== Hero (full viewport, minimalist) ===== */
+.hero-section{
+    width:100vw; 
+    min-height:100vh;
+    display:flex; 
+    flex-direction:column; 
+    align-items:center; 
+    justify-content:center;
+    position:relative; 
+    z-index:1; 
+    text-align:center;
+    padding-top:5.5rem; 
+    padding-bottom:0;
+    color:#fff; 
+    background:#000; 
+    overflow:hidden;
   }
+
+  .hero-inner{
+    width:100%;
+    max-width:var(--max-width);
+    margin:0 auto;
+    padding:0 1.5rem;
+    display:flex;
+    justify-content:flex-start;
+  }
+
+  .hero-copy{
+    max-width:540px;
+  }
+
+  .hero-kicker{
+    font-size:.78rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,.68);
+    margin-bottom:.65rem;
+  }
+
+  .hero-title{
+    font-size:clamp(2.3rem,4vw,3rem);
+    line-height:1.1;
+    margin:0 0 .75rem;
+  }
+
+  .hero-subtitle{
+    font-size:1.02rem;
+    color:rgba(255,255,255,.8);
+    margin:0 0 1.8rem;
+  }
+
   /* the video behind the heading */
   .hero-bg-video{
     position:absolute; inset:0; width:100%; height:100%;
     object-fit:cover; z-index:0; /* no darkening */
     filter:none;
   }
+
   /* overlay off */
   .hero-overlay{
     display:none;
   }
   
-  /* centered hero logo */
-  .hero-logo {
+/* centered hero logo */
+.hero-logo {
     position: relative;
     z-index: 2;
     width: 200px;
@@ -354,8 +398,6 @@
     filter: drop-shadow(0 4px 16px rgba(0,0,0,.6));
     overflow: hidden; /* needed for the glint sweep */
   }
-
-
 
   @keyframes logoFade {
     0% { opacity: 0; transform: translateY(20px); }
@@ -379,20 +421,60 @@
 
 
 
-      /* ===== Buttons (BW invert) ===== */
+/* ===== Buttons ===== */
       .premium-btn,
-      .hero-btn,
       .contact-btn{
-        background:#000; color:#fff; font-weight:700; border-radius:40px;
-        padding:1.12rem 2.85rem; font-size:1.18rem; border:1px solid #fff;
-        outline:none; box-shadow:none; transition:background .3s, color .3s, transform .15s, border-color .3s;
-        cursor:pointer; text-decoration:none; display:inline-block;
+        background:#000;
+        color:#fff;
+        font-weight:700;
+        border-radius:40px;
+        padding:1.12rem 2.85rem;
+        font-size:1.18rem;
+        border:1px solid #fff;
+        outline:none;
+        box-shadow:none;
+        transition:background .3s, color .3s, transform .15s, border-color .3s;
+        cursor:pointer;
+        text-decoration:none;
+        display:inline-block;
       }
+
       .premium-btn:hover,
-      .hero-btn:hover,
       .contact-btn:hover{
-        background:#fff; color:#000; box-shadow:0 0 18px rgba(255,255,255,.14); transform:scale(1.05);
+        background:#fff;
+        color:#000;
+        box-shadow:0 0 18px rgba(255,255,255,.14);
+        transform:scale(1.05);
       }
+
+      .hero-btn{
+        display:inline-block;
+        padding:1rem 2.4rem;
+        font-size:1rem;
+        font-weight:600;
+        border-radius:32px;
+        border:1px solid #1f6feb;
+        background:#1f6feb;
+        color:#fff;
+        text-decoration:none;
+        cursor:pointer;
+        outline:none;
+        box-shadow:none;
+        transition:background .2s ease,
+                   color .2s ease,
+                   transform .15s ease,
+                   box-shadow .2s ease,
+                   border-color .2s ease;
+      }
+
+      .hero-btn:hover{
+        background:transparent;
+        color:#1f6feb;
+        border-color:#1f6feb;
+        box-shadow:0 0 18px rgba(31,111,235,.35);
+        transform:translateY(-1px);
+      }
+
 
       /* ===== Sections ===== */
       .site-section{ width:100vw; background:#000 !important; margin:0; padding:0; border-radius:0; box-shadow:none; display:block; }
@@ -708,6 +790,138 @@
     z-index: 2000;
     pointer-events: none;
   }
+/* Strategy strip (Sterling-style) */
+.rs-strategy-strip {
+    background: #101010;
+    border-top: 1px solid #202020;
+    border-bottom: 1px solid #202020;
+}
+
+.rs-strategy-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3.5rem 1.5rem;
+}
+
+/* Desktop: 4-column grid */
+.rs-strategy-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2.5rem;
+}
+
+.rs-strategy-card {
+    background: #151515;
+    padding: 2.25rem 1.75rem;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px #202020;
+    min-height: 210px;
+    box-sizing: border-box;
+}
+
+.rs-strategy-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ccc;
+    margin-bottom: 1.5rem;
+}
+
+.rs-strategy-title {
+    font-size: 0.95rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 0.9rem;
+}
+
+.rs-strategy-text {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #bbbbbb;
+}
+
+/* Dots – hidden on desktop */
+.rs-strategy-dots {
+    display: none;
+}
+
+/* ------------ MOBILE CAROUSEL (fixes wrapping) ------------ */
+@media (max-width: 768px) {
+    .rs-strategy-inner {
+        padding: 2.75rem 1.25rem 2.25rem;
+    }
+
+    /* Track: horizontal scroll, but text stays within viewport */
+    .rs-strategy-grid {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: visible;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        gap: 0;
+        padding-bottom: 1.2rem;
+    }
+
+    .rs-strategy-card {
+        flex: 0 0 100%;                /* exactly viewport width */
+        padding: 1.9rem 1.4rem 2.6rem;
+        min-height: 0;
+        height: auto;
+        scroll-snap-align: start;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        box-sizing: border-box;
+    }
+
+    /* THIS is what fixes your “one long line” issue */
+    .rs-strategy-text {
+        font-size: 0.9rem;
+        line-height: 1.55;
+        margin-top: 0.6rem;
+        white-space: normal;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        max-width: 18rem;             /* ~288px: forces wrapping */
+        width: 100%;
+        display: block;
+    }
+
+    .rs-strategy-dots {
+        display: flex;
+        justify-content: center;
+        gap: 0.55rem;
+        margin-top: 1.4rem;
+    }
+
+    .rs-strategy-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        border: none;
+        background: #444;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .rs-strategy-dot.active {
+        background: #ffffff;
+        width: 22px;
+    }
+}
+
+
+
+
 
   </style>
 
@@ -798,7 +1012,7 @@
     </div>
   </nav>
 
-  <!-- Hero -->
+<!-- Hero -->
 <section class="hero-section" id="home">
   <video class="hero-bg-video"
          src="https://cdn.shopify.com/videos/c/o/v/bdda76898684442a9abe8bbfd11d50ef.mp4"
@@ -815,31 +1029,38 @@
 </section>
 
 
+
+
 <section class="stats-bar reveal">
-  <div class="stats-inner">
-    <div class="stat"
-     data-target="1000000"
-     data-prefix="€"
-     data-suffix="+"
-     data-format="abbr"
-     data-fixed="1"
-     data-duration="2800">
-  <h4><span class="stat-num">0</span></h4>
-  <p>Assets Under Management</p>
-</div>
+  <div class="stats-inner stats-inner--stacked">
 
-    <div class="stat" data-target="3">
-      <h4><span class="stat-num">0</span></h4>
-      <p>Active Strategies</p>
+    <!-- Top row: big numbers -->
+    <div class="stats-row">
+      <div class="stat"
+           data-target="1000000"
+           data-prefix="€"
+           data-suffix="+"
+           data-format="abbr"
+           data-fixed="1"
+           data-duration="2800">
+        <h4 class="stat-num">0</h4>
+        <p>Assets Under Management</p>
+      </div>
+
+      <div class="stat" data-target="3" data-duration="2200">
+        <h4 class="stat-num">0</h4>
+        <p>Active Strategies</p>
+      </div>
     </div>
 
-    <!-- keep text if you prefer; or make it numeric by setting target -->
-    <div class="stat">
-      <h4>Long Term</h4>
-      <p>Average Hold</p>
+    <!-- Bottom row: strategy line -->
+    <div class="stats-caption">
+      Private Equity · Real Estate · Quant &amp; Allocation
     </div>
+
   </div>
 </section>
+
 
     <!-- ABOUT -->
     <section class="site-section reveal" id="about">
@@ -858,6 +1079,61 @@
         </p>
       </div>
     </section>
+<section class="rs-strategy-strip" id="strategies">
+  <div class="rs-strategy-inner">
+
+    <!-- Track: desktop = grid, mobile = sliding carousel -->
+    <div class="rs-strategy-grid" id="strategyTrack">
+
+      <article class="rs-strategy-card">
+        <div class="rs-strategy-icon">PE</div>
+        <h3 class="rs-strategy-title">Private Equity</h3>
+        <p class="rs-strategy-text">
+          Controlling and minority positions in cash-flowing businesses with clear
+          paths to operational improvement and scale.
+        </p>
+      </article>
+
+      <article class="rs-strategy-card">
+        <div class="rs-strategy-icon">RE</div>
+        <h3 class="rs-strategy-title">Real Estate</h3>
+        <p class="rs-strategy-text">
+          Income-producing residential and commercial assets with resilient
+          rental demand and disciplined leverage.
+        </p>
+      </article>
+
+      <article class="rs-strategy-card">
+        <div class="rs-strategy-icon">QA</div>
+        <h3 class="rs-strategy-title">Quant & Allocation</h3>
+        <p class="rs-strategy-text">
+          Rules-based allocation across public markets, focusing on risk-adjusted
+          returns and capital preservation.
+        </p>
+      </article>
+
+      <article class="rs-strategy-card">
+        <div class="rs-strategy-icon">HA</div>
+        <h3 class="rs-strategy-title">Hard Assets</h3>
+        <p class="rs-strategy-text">
+          Exposure to real-world assets such as gold and infrastructure that
+          hedge inflation and protect purchasing power.
+        </p>
+      </article>
+
+    </div>
+
+    <!-- Carousel dots (mobile only) -->
+    <div class="rs-strategy-dots" id="strategyDots">
+      <button class="rs-strategy-dot active" data-index="0" aria-label="Private Equity"></button>
+      <button class="rs-strategy-dot" data-index="1" aria-label="Real Estate"></button>
+      <button class="rs-strategy-dot" data-index="2" aria-label="Quant &amp; Allocation"></button>
+      <button class="rs-strategy-dot" data-index="3" aria-label="Hard Assets"></button>
+    </div>
+
+  </div>
+</section>
+
 
   <section class="site-section reveal" id="blueprint">
     <div class="section-inner blueprint-strip">
@@ -1259,6 +1535,57 @@
 .section-divider {
   height:1px; width:80%; margin:3rem auto;
   background:linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+}
+.stats-inner--stacked{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0.6rem;
+}
+
+.stats-row{
+  display:flex;
+  gap:3.5rem;
+  align-items:center;
+  justify-content:center;
+}
+
+@media (max-width: 768px){
+  .stats-row{
+    flex-direction:column;   /* stack the 2 stats nicely on phone */
+    align-items:center;
+  }
+}
+
+
+
+
+.stat h4{
+  font-size:1.7rem;
+  margin:0;
+}
+
+.stat p{
+  margin:0.25rem 0 0;
+  font-size:0.8rem;
+  text-transform:uppercase;
+  letter-spacing:0.14em;
+  opacity:0.78;
+}
+
+.stats-caption{
+  font-size:0.78rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  opacity:0.8;
+}
+
+/* mobile */
+@media(max-width:700px){
+  .stats-row{
+    flex-direction:column;
+    gap:0.9rem;
+  }
 }
 
 /* Contact accordion – pops like Acquisition Blueprint cards */
@@ -2053,60 +2380,6 @@
     runModel();
   </script>
 
-
-  <script>
-    (function(){
-      const bar = document.getElementById('scroll-progress');
-      if(!bar) return;
-      const update = () => {
-        const h = document.documentElement;
-        const scrolled = h.scrollTop || document.body.scrollTop;
-        const height = h.scrollHeight - h.clientHeight;
-        const pct = height > 0 ? (scrolled / height) * 100 : 0;
-        bar.style.width = pct + '%';
-      };
-      window.addEventListener('scroll', update, { passive: true });
-      window.addEventListener('resize', update);
-      update();
-    })();
-  </script>
-  <script>
-    (function(){
-      const title = document.querySelector('.hero-title');
-      const sub   = document.querySelector('.hero-subtitle');
-      if(!title || !sub) return;
-
-      let raf = null, targetX = 0, targetY = 0, currentX = 0, currentY = 0;
-
-      const onMove = (e) => {
-        const { innerWidth:w, innerHeight:h } = window;
-        const x = (e.clientX / w - 0.5) * 2; // -1..1
-        const y = (e.clientY / h - 0.5) * 2;
-        targetX = x * 6;   // degrees-ish for rotate/translate feeling
-        targetY = y * 6;
-        if (!raf) raf = requestAnimationFrame(tick);
-      };
-
-      const lerp = (a,b,t)=>a+(b-a)*t;
-
-      const tick = () => {
-        currentX = lerp(currentX, targetX, 0.08);
-        currentY = lerp(currentY, targetY, 0.08);
-
-        title.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
-        sub.style.transform   = `translate3d(${currentX * 0.6}px, ${currentY * 0.6}px, 0)`;
-
-        if (Math.abs(currentX - targetX) > 0.1 || Math.abs(currentY - targetY) > 0.1) {
-          raf = requestAnimationFrame(tick);
-        } else {
-          raf = null;
-        }
-      };
-
-      window.addEventListener('mousemove', onMove, { passive: true });
-    })();
-    
-  </script>
   <script>
     // --- Mobile burger inside model view ---
     const modelBurger = document.getElementById('modelBurger');
@@ -2226,63 +2499,62 @@
 </script>
 <script>
 (function () {
-  const toggle = document.querySelector('.contact-toggle');
-  const panel  = document.getElementById('contact-panel');
-  const navbar = document.querySelector('.navbar');
+  const track = document.getElementById('strategyTrack');
+  const dotsWrap = document.getElementById('strategyDots');
+  if (!track || !dotsWrap) return;
 
-  if (!toggle || !panel) return;
+  const dots  = Array.from(dotsWrap.querySelectorAll('.rs-strategy-dot'));
+  const cards = Array.from(track.querySelectorAll('.rs-strategy-card'));
+  if (!dots.length || dots.length !== cards.length) return;
 
-  const NAV_OFFSET = (navbar ? navbar.offsetHeight : 0) + 16;
+  let index = 0;
 
-  // start closed
-  panel.hidden = true;
-  panel.style.maxHeight = '0px';
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
 
-  toggle.addEventListener('click', () => {
-    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+  function goToSlide(i) {
+    index = (i + cards.length) % cards.length;
 
-    if (isOpen) {
-      // closing
-      const currentHeight = panel.scrollHeight;
-      panel.style.maxHeight = currentHeight + 'px'; // start height
-      void panel.offsetHeight;                      // force reflow
-      panel.style.maxHeight = '0px';
-      panel.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
+    if (isMobile()) {
+      const card = cards[index];
+      card.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'start',
+        block: 'nearest'
+      });
     } else {
-      // opening (no scroll here yet)
-      panel.hidden = false;
-      panel.classList.add('open');
-      const targetHeight = panel.scrollHeight;
-      panel.style.maxHeight = targetHeight + 'px';
-      toggle.setAttribute('aria-expanded', 'true');
+      // desktop: ensure we’re at the start
+      track.scrollLeft = 0;
+    }
+
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === index);
+    });
+  }
+
+  // dot clicks – manual control only
+  dots.forEach((dot, idx) => {
+    dot.addEventListener('click', () => {
+      goToSlide(idx);
+    });
+  });
+
+  // re-init on resize
+  window.addEventListener('resize', () => {
+    if (!isMobile()) {
+      track.scrollLeft = 0;
+    } else {
+      goToSlide(index);
     }
   });
 
-  panel.addEventListener('transitionend', (e) => {
-    if (e.propertyName !== 'max-height') return;
-
-    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-
-    if (!isOpen) {
-      // fully closed → hide so it doesn't trap focus
-      panel.hidden = true;
-      return;
-    }
-
-    // fully opened → lock height and then scroll
-    panel.style.maxHeight = panel.scrollHeight + 'px';
-
-    const rect = panel.getBoundingClientRect();
-    const y =
-      (window.pageYOffset || window.scrollY || 0) +
-      rect.top -
-      NAV_OFFSET;
-
-    window.scrollTo({ top: y, behavior: 'smooth' });
-  });
+  // init
+  goToSlide(0);
 })();
 </script>
+
+
 
 
   </body>
