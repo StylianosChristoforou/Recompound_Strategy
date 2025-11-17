@@ -792,10 +792,11 @@
   }
 /* Strategy strip (Sterling-style) */
 .rs-strategy-strip {
-    background: #101010;
-    border-top: 1px solid #202020;
-    border-bottom: 1px solid #202020;
+    background: #050505;                 /* same deep black as rest of site */
+    border-top: none;
+    border-bottom: none;
 }
+
 
 .rs-strategy-inner {
     max-width: 1100px;
@@ -811,13 +812,20 @@
 }
 
 .rs-strategy-card {
-    background: #151515;
+    background: #050505;                 /* match section/background */
     padding: 2.25rem 1.75rem;
-    border-radius: 4px;
-    box-shadow: 0 0 0 1px #202020;
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px #1b1b1b;       /* subtle outline only */
     min-height: 210px;
     box-sizing: border-box;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
+
+.rs-strategy-card:hover {
+    box-shadow: 0 0 0 1px #ffffff22;     /* tiny highlight on hover */
+    transform: translateY(-2px);
+}
+
 
 .rs-strategy-icon {
     width: 40px;
@@ -951,15 +959,15 @@
 
   .testimonial-quote {
     display: block;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-style: italic;
     color: #ddd;
   }
 
   .testimonial-author {
     display: block;
-    margin-top: 0.6rem;
-    font-size: 1rem;
+    margin-top: 0.9rem;
+    font-size: 1.3rem;
     color: #999;
   }
 
