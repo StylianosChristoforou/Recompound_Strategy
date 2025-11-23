@@ -477,7 +477,17 @@
 
 
       /* ===== Sections ===== */
-      .site-section{ width:100vw; background:#000 !important; margin:0; padding:0; border-radius:0; box-shadow:none; display:block; }
+      .site-section{
+  width:100vw;
+  background:#000 !important;
+  margin:0;
+  padding:0;
+  border-radius:0;
+  box-shadow:none;
+  display:block;
+  border-top:1px solid rgba(255,255,255,0.08);
+}
+
       .section-inner{
     max-width:1200px;      /* match navbar container width */
     margin:0 auto;
@@ -637,7 +647,29 @@
         display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;
         margin:0 auto; max-width:var(--max-width); width:100%;
       }
-      .footer-link{ color:#fff; font-size:1.04rem; text-decoration:underline; }
+      .footer-link{
+  position:relative;
+  color:#fff;
+  font-size:1.04rem;
+  text-decoration:none;
+  padding-bottom:2px;
+}
+
+.footer-link::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:0;
+  height:1px;
+  background:#ffffff;
+  transition:width .22s ease-out;
+}
+
+.footer-link:hover::after{
+  width:100%;
+}
+
       .footer-link:hover{ color:#fff; }
       .footer-socials{ display:flex; gap:1.1rem; align-items:center; }
       .footer-socials a{ color:#fff; font-weight:700; font-size:1.13rem; text-decoration:none; display:flex; align-items:center; }
@@ -697,17 +729,21 @@
         }
       }
 
-      /* ===== Scroll Reveal Animation ===== */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: opacity, transform;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* ===== Scroll Reveal Animation ===== */
+/* ===== Scroll Reveal Animation ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
   /* Accessible focus ring across the site */
   :focus-visible {
     outline: 2px solid #ffffff;
@@ -791,140 +827,234 @@
     pointer-events: none;
   }
 /* Strategy strip (Sterling-style) */
+/* Strategy strip (Sterling-style) */
 .rs-strategy-strip {
-    background: #050505;                 /* same deep black as rest of site */
-    border-top: none;
-    border-bottom: none;
+  background:#050505;
+  border-top:1px solid rgba(255,255,255,0.08);
+  border-bottom:none;
 }
 
 
 .rs-strategy-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 3.5rem 1.5rem;
+  max-width:1100px;                 /* slightly tighter for more focus */
+  margin:0 auto;
+  padding:3.4rem 1.5rem 3rem;
+}
+
+/* Tiny label above the cards */
+.rs-strategy-label {
+  font-size:0.78rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:#949494;
+  margin-bottom:1.9rem;
 }
 
 /* Desktop: 4-column grid */
 .rs-strategy-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 2.5rem;
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0, 1fr));
+  gap:2.2rem;                        /* a bit less space between cards */
+}
+  
+
+
+
+
+/* === Scroll animations from video – JS-driven only === */
+
+/* Initial hidden state for text blocks */
+.autoShow {
+  opacity: 0;
+  transform: translateY(100px);
 }
 
+@keyframes text-appear {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Initial hidden state for the 4 cards */
+.imageReveal {
+  filter: saturate(0) contrast(4) brightness(.1) blur(5px);
+  opacity: 0;
+  transform: translateY(4rem) scale(0.95);
+}
+
+/* Your original card effect, but driven by JS adding .rs-visible */
+@keyframes imageReveal {
+  from {
+    filter: saturate(0) contrast(4) brightness(.1) blur(5px);
+    opacity: 0;
+    transform: translateY(4rem) scale(0.95);
+  }
+  to {
+    filter: none;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* When JS adds .rs-visible on scroll, play the animations */
+.autoShow.rs-visible {
+  animation: text-appear 0.7s ease-out forwards;
+}
+
+.imageReveal.rs-visible {
+  animation: imageReveal 0.7s ease-out forwards;
+}
+
+
+
+/* Card styling ONLY */
 .rs-strategy-card {
-    background: #050505;                 /* match section/background */
-    padding: 2.25rem 1.75rem;
-    border-radius: 6px;
-    box-shadow: 0 0 0 1px #1b1b1b;       /* subtle outline only */
-    min-height: 210px;
-    box-sizing: border-box;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  position:relative;
+  background:radial-gradient(circle at top, rgba(255,255,255,0.06), #050505 60%);
+  padding:2.4rem 2rem;
+  border-radius:18px;
+  box-shadow:0 0 0 1px #1b1b1b;
+  min-height:240px;
+  box-sizing:border-box;
+  overflow:hidden;
+  transition:
+    transform .26s ease,
+    box-shadow .28s ease,
+    border-color .26s ease;
+}
+
+
+
+/* subtle glint overlay */
+.rs-strategy-card::before {
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:inherit;
+  background:linear-gradient(
+    120deg,
+    rgba(255,255,255,0.18),
+    transparent 45%,
+    transparent 55%,
+    rgba(255,255,255,0.18)
+  );
+  opacity:0;
+  mix-blend-mode:screen;
+  pointer-events:none;
+  transition:opacity .26s ease;
 }
 
 .rs-strategy-card:hover {
-    box-shadow: 0 0 0 1px #ffffff22;     /* tiny highlight on hover */
-    transform: translateY(-2px);
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 0 26px rgba(0,0,0,0.85);
+  border-color:rgba(255,255,255,0.24);
+}
+
+.rs-strategy-card:hover::before {
+  opacity:1;
 }
 
 
 .rs-strategy-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 999px;
-    border: 1px solid #444;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #ccc;
-    margin-bottom: 1.5rem;
+  width:44px;
+  height:44px;
+  border-radius:999px;
+  border:1px solid #444;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.72rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#d4d4d4;
+  margin-bottom:1.6rem;
 }
 
 .rs-strategy-title {
-    font-size: 0.95rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #ffffff;
-    margin-bottom: 0.9rem;
+  font-size:.88rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:#ffffff;
+  margin-bottom:1rem;
 }
 
 .rs-strategy-text {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: #bbbbbb;
+  font-size:.95rem;
+  line-height:1.7;
+  color:#c3c3c3;
 }
 
 /* Dots – hidden on desktop */
 .rs-strategy-dots {
-    display: none;
+  display:none;
 }
 
-/* ------------ MOBILE CAROUSEL (fixes wrapping) ------------ */
+/* ------------ MOBILE CAROUSEL ------------ */
 @media (max-width: 768px) {
-    .rs-strategy-inner {
-        padding: 2.75rem 1.25rem 2.25rem;
-    }
+  .rs-strategy-inner {
+    padding:2.75rem 1.25rem 2.25rem;
+  }
 
-    /* Track: horizontal scroll, but text stays within viewport */
-    .rs-strategy-grid {
-        display: flex;
-        overflow-x: auto;
-        overflow-y: visible;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-        gap: 0;
-        padding-bottom: 1.2rem;
-    }
+  .rs-strategy-grid {
+    display:flex;
+    overflow-x:auto;
+    overflow-y:visible;
+    scroll-snap-type:x mandatory;
+    scroll-behavior:smooth;
+    -webkit-overflow-scrolling:touch;
+    gap:0;
+    padding-bottom:1.2rem;
+  }
 
-    .rs-strategy-card {
-        flex: 0 0 100%;                /* exactly viewport width */
-        padding: 1.9rem 1.4rem 2.6rem;
-        min-height: 0;
-        height: auto;
-        scroll-snap-align: start;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        box-sizing: border-box;
-    }
+  .rs-strategy-card {
+    flex:0 0 100%;
+    padding:2.1rem 1.6rem 2.7rem;
+    min-height:0;
+    height:auto;
+    scroll-snap-align:start;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+  }
 
-    /* THIS is what fixes your “one long line” issue */
-    .rs-strategy-text {
-        font-size: 0.9rem;
-        line-height: 1.55;
-        margin-top: 0.6rem;
-        white-space: normal;
-        overflow-wrap: break-word;
-        word-break: break-word;
-        max-width: 18rem;             /* ~288px: forces wrapping */
-        width: 100%;
-        display: block;
-    }
+  .rs-strategy-text {
+    font-size:0.9rem;
+    line-height:1.6;
+    margin-top:0.6rem;
+    white-space:normal;
+    overflow-wrap:break-word;
+    word-break:break-word;
+    max-width:18rem;
+    width:100%;
+    display:block;
+  }
 
-    .rs-strategy-dots {
-        display: flex;
-        justify-content: center;
-        gap: 0.55rem;
-        margin-top: 1.4rem;
-    }
+  .rs-strategy-dots {
+    display:flex;
+    justify-content:center;
+    gap:0.55rem;
+    margin-top:1.4rem;
+  }
 
-    .rs-strategy-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        border: none;
-        background: #444;
-        padding: 0;
-        cursor: pointer;
-    }
+  .rs-strategy-dot {
+    width:8px;
+    height:8px;
+    border-radius:999px;
+    border:none;
+    background:#444;
+    padding:0;
+    cursor:pointer;
+  }
 
-    .rs-strategy-dot.active {
-        background: #ffffff;
-        width: 22px;
-    }
+  .rs-strategy-dot.active {
+    background:#ffffff;
+    width:22px;
+  }
 }
 
 
@@ -951,24 +1081,43 @@
   }
   </script>
   <style>
-      .testimonial-section {
-    text-align: center;
+  .testimonial-section {
     margin: 4rem 0;
-    padding: 2rem 1rem;
+    padding: 3rem 0;
+  }
+
+  .testimonial-blockquote{
+    position: relative;
+    max-width: 780px;
+    margin: 0 auto;
+    padding-left: 1.8rem;
+    text-align: left;
+  }
+
+  .testimonial-blockquote::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.1rem;
+    bottom: 0.1rem;
+    width: 2px;
+    background: #ffffff;
+    opacity: 0.9;
+    border-radius: 4px;
   }
 
   .testimonial-quote {
     display: block;
     font-size: 1.5rem;
     font-style: italic;
-    color: #ddd;
+    color: #dddddd;
   }
 
   .testimonial-author {
     display: block;
     margin-top: 0.9rem;
-    font-size: 1.3rem;
-    color: #999;
+    font-size: 1.1rem;
+    color: #999999;
   }
 
   /* Actual visible entrance */
@@ -982,6 +1131,7 @@
     opacity: 1;
     transform: translateY(0);
   }
+
 
     </style>
  <style>
@@ -1014,6 +1164,7 @@
       <!-- Right: nav links -->
       <ul class="nav-menu" id="mainNavMenu">
     <li><a href="#home" class="active" aria-current="page">Home</a></li>
+    <li><a href="#strategy">Strategy</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#model" id="nav-model">Acquisition Model</a></li>
   </ul>
@@ -1079,87 +1230,145 @@
     </section>
 
     <!-- WHAT WE DO -->
-    <section class="site-section reveal" id="what-we-do">
-      <div class="section-inner">
-        <h3>What We Do</h3>
-        <p>
-          We acquire and hold cash flowing Real Estate that funds future acquisitions. We use leverage strategically to build equity while controlling risk and let assets pay themselves down through cash flow. Profits are reinvested into new deals to expand and diversify ownership over time.
-        </p>
-      </div>
-    </section>
+<!-- NEW: slim What We Do copy -->
+<section class="site-section reveal autoShow" id="what-we-do">
+
+  <div class="section-inner">
+    <h3>What We Do</h3>
+    <p>
+      We acquire and hold cash flowing Real Estate that funds future acquisitions.
+      We use leverage strategically to build equity while controlling risk and let
+      assets pay themselves down through cash flow. Profits are reinvested into new
+      deals to expand and diversify ownership over time.
+    </p>
+  </div>
+</section>
+
+<!-- NEW: 4-card strategy strip (desktop grid + mobile carousel) -->
 <section class="rs-strategy-strip" id="strategies">
   <div class="rs-strategy-inner">
 
-    <!-- Track: desktop = grid, mobile = sliding carousel -->
     <div class="rs-strategy-grid" id="strategyTrack">
+      <article class="rs-strategy-card autoShow imageReveal">
 
-      <article class="rs-strategy-card">
         <div class="rs-strategy-icon">PE</div>
         <h3 class="rs-strategy-title">Private Equity</h3>
-        <p class="rs-strategy-text">
-          Controlling and minority positions in cash-flowing businesses with clear
-          paths to operational improvement and scale.
-        </p>
+        <p class="rs-strategy-text">Controlling and minority positions in cash-flowing businesses with clear
+          paths to operational improvement and scale.</p> 
       </article>
 
-      <article class="rs-strategy-card">
+      <article class="rs-strategy-card autoShow imageReveal">
+
         <div class="rs-strategy-icon">RE</div>
         <h3 class="rs-strategy-title">Real Estate</h3>
-        <p class="rs-strategy-text">
-          Income-producing residential and commercial assets with resilient
-          rental demand and disciplined leverage.
-        </p>
+        <p class="rs-strategy-text">Income-producing residential and commercial assets with resilient
+          rental demand and disciplined leverage.</p> 
       </article>
 
-      <article class="rs-strategy-card">
+      <article class="rs-strategy-card autoShow imageReveal">
+
         <div class="rs-strategy-icon">QA</div>
-        <h3 class="rs-strategy-title">Quant & Allocation</h3>
-        <p class="rs-strategy-text">
-          Rules-based allocation across public markets, focusing on risk-adjusted
-          returns and capital preservation.
-        </p>
+        <h3 class="rs-strategy-title">Quant &amp; Allocation</h3>
+        <p class="rs-strategy-text">Rules-based allocation across public markets, focusing on risk-adjusted
+          returns and capital preservation.</p> 
       </article>
 
-      <article class="rs-strategy-card">
+      <article class="rs-strategy-card autoShow imageReveal">
+
         <div class="rs-strategy-icon">HA</div>
         <h3 class="rs-strategy-title">Hard Assets</h3>
-        <p class="rs-strategy-text">
-          Exposure to real-world assets such as gold and infrastructure that
-          hedge inflation and protect purchasing power.
-        </p>
+        <p class="rs-strategy-text">Exposure to real-world assets such as gold and infrastructure that
+          hedge inflation and protect purchasing power.</p> 
       </article>
+    </div>
+  </div>
+</section>
 
+
+
+  <!-- Strategy detail section -->
+<section class="site-section reveal" id="strategy">
+  <div class="section-inner strategy-detail-inner">
+    <div class="strategy-detail-header">
+      <h3>How We Compound Capital</h3>
+      <p class="strategy-detail-intro">
+        Recompound Strategy deploys capital across three core pillars Private Equity, Real Estate, and Quant Allocation with a single objective: Grow durable cash flow and recycle it into more ownership.
+      </p>
     </div>
 
-    <!-- Carousel dots (mobile only) -->
-    <div class="rs-strategy-dots" id="strategyDots">
-      <button class="rs-strategy-dot active" data-index="0" aria-label="Private Equity"></button>
-      <button class="rs-strategy-dot" data-index="1" aria-label="Real Estate"></button>
-      <button class="rs-strategy-dot" data-index="2" aria-label="Quant &amp; Allocation"></button>
-      <button class="rs-strategy-dot" data-index="3" aria-label="Hard Assets"></button>
-    </div>
+    <div class="strategy-tabs">
+      <div class="strategy-tabs-nav">
+        <button class="strategy-tab-btn active" data-tab="pe" data-short="PE">Private Equity</button>
+        <button class="strategy-tab-btn" data-tab="re" data-short="RE">Real Estate</button>
+        <button class="strategy-tab-btn" data-tab="qa" data-short="QA">Quant &amp; Allocation</button>
+      </div>
 
+      <div class="strategy-tabs-body">
+        <div class="strategy-panels">
+          <article class="strategy-panel active" data-tab="pe">
+            <h2>Private Equity</h2>
+            <p>
+              Control or minority stakes in cash flowing businesses where operational improvement can unlock higher free cash flow without financial engineering.
+            </p>
+            <ul>
+              <li>Focus on simple, durable business models with real customers.</li>
+              <li>Align incentives with operators and keep balance sheets conservative.</li>
+              <li>Use excess cash flow to reduce risk and fund future acquisitions.</li>
+            </ul>
+          </article>
+
+          <article class="strategy-panel" data-tab="re">
+            <h2>Real Estate</h2>
+            <p>
+              Income producing residential and commercial assets in markets with resilient demand and disciplined leverage.
+            </p>
+            <ul>
+              <li>Target properties where cash flow pays for capex and debt service.</li>
+              <li>Improve yield through renovations, better management, and tenant quality.</li>
+              <li>Recycle retained cash and equity into the next property rather than distributing it.</li>
+            </ul>
+          </article>
+
+          <article class="strategy-panel" data-tab="qa">
+            <h2>Quant &amp; Allocation</h2>
+            <p>
+              Rules based allocation across public markets to compound excess cash while controlling risk.
+            </p>
+            <ul>
+              <li>Use systematic rules for entries, sizing, and risk management.</li>
+              <li>Prioritise drawdown control and capital preservation over chasing maximum return.</li>
+              <li>Channel realised gains back into long term private equity and real estate holdings.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 
   <section class="site-section reveal" id="blueprint">
     <div class="section-inner blueprint-strip">
+
       <h3>Acquisition Blueprint</h3>
       <div class="blueprint-steps">
         <div class="bp-step">
+          <span class="bp-index">01</span>
           <span class="bp-label">Source</span>
           <span class="bp-text">Target cash flowing assets that fit strict criteria.</span>
         </div>
         <div class="bp-step">
-          <span class="bp-label">Acquire & Leverage</span>
+          <span class="bp-index">02</span>
+          <span class="bp-label">Acquire &amp; Leverage</span>
           <span class="bp-text">Acquire with disciplined leverage, backed by cash flow.</span>
         </div>
         <div class="bp-step">
-          <span class="bp-label">Operate & Reinvest</span>
+          <span class="bp-index">03</span>
+          <span class="bp-label">Operate &amp; Reinvest</span>
           <span class="bp-text">Improve operations and recycle free cash into more assets.</span>
         </div>
         <div class="bp-step">
+          <span class="bp-index">04</span>
           <span class="bp-label">Compound</span>
           <span class="bp-text">Let scale, yield, and time do the heavy lifting.</span>
         </div>
@@ -1167,28 +1376,65 @@
     </div>
   </section>
 
-    <section class="site-section reveal" id="structure">
-    <div class="section-inner">
-      <h3>Structure & Strategy</h3>
-      <ul class="strategy-list">
-        <li><strong>HoldCo Structure:</strong> All assets owned through one controlled entity for efficiency and scalability.</li>
-        <li><strong>Cash Flow Engine:</strong> Income producing properties fuel reinvestment cycles without outside dilution.</li>
-        <li><strong>Capital Discipline:</strong> Debt only when self liquidating through asset cash flow.</li>
-        <li><strong>Recompound Strategy:</strong> Profits never exit they expand ownership and equity control.</li>
-      </ul>
-    </div>
-  </section>
+  <div class="section-divider"></div>
 
-  <section class="testimonial-section site-section reveal">
-    <div class="section-inner">
-      <blockquote>
-        <span class="testimonial-quote">
-          “The first rule of compounding: Never interrupt it unnecessarily.”
-        </span>
-        <span class="testimonial-author">— Charlie Munger</span>
-      </blockquote>
+<section class="site-section reveal" id="structure">
+  <div class="section-inner">
+    <h3>Structure & Strategy</h3>
+
+    <div class="rs-vertical-list-wrapper">
+      <div class="rs-vertical-list">
+
+        <div class="rs-v-item">
+          <div class="rs-v-line"></div>
+          <div class="rs-v-content">
+            <h4>HoldCo Structure</h4>
+            <p>All assets owned through one controlled entity for efficiency and scalability.</p>
+          </div>
+        </div>
+
+        <div class="rs-v-item">
+          <div class="rs-v-line"></div>
+          <div class="rs-v-content">
+            <h4>Cash Flow Engine</h4>
+            <p>Income producing properties fuel reinvestment cycles without outside dilution.</p>
+          </div>
+        </div>
+
+        <div class="rs-v-item">
+          <div class="rs-v-line"></div>
+          <div class="rs-v-content">
+            <h4>Capital Discipline</h4>
+            <p>Debt only when self liquidating through asset cash flow.</p>
+          </div>
+        </div>
+
+        <div class="rs-v-item">
+          <div class="rs-v-line"></div>
+          <div class="rs-v-content">
+            <h4>Recompound Strategy</h4>
+            <p>Profits never exit; they expand ownership and equity control.</p>
+          </div>
+        </div>
+
+      </div>
     </div>
-  </section>
+
+  </div>
+</section>
+
+
+<section class="testimonial-section site-section reveal">
+  <div class="section-inner">
+    <blockquote class="testimonial-blockquote">
+      <span class="testimonial-quote">
+        “The first rule of compounding: Never interrupt it unnecessarily.”
+      </span>
+      <span class="testimonial-author">— Charlie Munger</span>
+    </blockquote>
+  </div>
+</section>
+
 
 <!-- CTA -->
 <section class="site-section" id="contact">
@@ -1198,6 +1444,27 @@
     <p class="contact-intro">
       For investment, development, or strategic collaboration, contact us.
     </p>
+<div class="contact-accordion">
+  <button
+    class="contact-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="contact-panel"
+  >
+    <span class="contact-toggle__label">Contact</span>
+    <span class="contact-toggle__icon" aria-hidden="true">+</span>
+  </button>
+
+  <div class="contact-underline-bar"></div> <!-- NEW BAR -->
+
+  <div
+    id="contact-panel"
+    class="contact-panel"
+    hidden
+  >
+    <!-- form ... -->
+  </div>
+</div>
 
     <div class="contact-accordion">
       <button
@@ -1207,7 +1474,7 @@
         aria-controls="contact-panel"
       >
         <span class="contact-toggle__label">Contact</span>
-        <span class="contact-toggle__icon">+</span>
+        <span class="contact-toggle__icon" aria-hidden="true">+</span>
       </button>
 
       <div
@@ -1462,7 +1729,8 @@
   }
 
   .bp-step {
-    padding: 1rem 1.1rem;
+    position: relative;
+    padding: 1rem 1.7rem 1rem 1.1rem; /* extra right space for the index */
     border-radius: 14px;
     border: 1px solid rgba(255,255,255,0.12);
     background: radial-gradient(circle at top, rgba(255,255,255,0.05), rgba(0,0,0,1));
@@ -1470,6 +1738,16 @@
     font-size: 0.9rem;
     transition: transform 0.25s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   }
+  .bp-index {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.9rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.38);
+  }
+
 
   /* Hover "pop" effect */
   .bp-step:hover {
@@ -1507,6 +1785,50 @@
       grid-template-columns: 1fr;
     }
   }
+  /* Acquisition Blueprint – connecting line + mobile left bar */
+
+@media (min-width: 901px) {
+  .blueprint-steps {
+    position: relative;
+  }
+
+  .blueprint-steps::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.18);
+    pointer-events: none;
+  }
+
+  .bp-step {
+    position: relative;
+    z-index: 1; /* cards sit above the line */
+  }
+}
+
+/* Mobile: stack with a short left line (similar vibe to Structure & Strategy) */
+@media (max-width: 600px) {
+  .bp-step {
+    position: relative;
+    padding-left: 1.4rem;
+  }
+
+  .bp-step::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55rem;
+    width: 2px;
+    height: 32px;
+    background: #ffffff;
+    border-radius: 3px;
+    opacity: 0.9;
+  }
+}
+
   .strategy-list li {
     margin: 0.6rem 0;
     color: rgba(255,255,255,0.85);
@@ -1607,6 +1929,56 @@
   margin: 1.6rem auto 0;
   text-align: center;
 }
+/* === Contact entrance animation (bar + button) === */
+.contact-accordion {
+  position: relative;
+  max-width: 520px;
+  margin: 1.6rem auto 0;
+  text-align: center;
+  padding-bottom: 1.4rem; /* room for the bar */
+  overflow: visible;
+}
+
+/* bottom bar that fills right → left */
+.contact-underline-bar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 2px;
+  width: 0;
+  background: #ffffff;
+  opacity: 0.9;
+  transform-origin: right center;
+}
+
+/* initial state: button hidden */
+.contact-toggle {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s ease-out,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.28s ease,
+    width 0.38s ease;
+}
+
+/* when section is triggered, bar animates and button appears */
+.contact-accordion.contact-entered .contact-underline-bar {
+  animation: contactBarFill 0.7s ease-out forwards;
+}
+
+.contact-accordion.contact-entered .contact-toggle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* keyframes: bar grows from right to left */
+@keyframes contactBarFill {
+  from { width: 0; }
+  to   { width: 100%; }
+}
 
 /* main pill button – starts as a centered pill, then grows to full width */
 .contact-toggle{
@@ -1697,6 +2069,250 @@
   }
 }
 
+/* Strategy detail / tabs */
+.strategy-detail-inner{
+  max-width:1100px;
+  margin:0 auto;
+  padding-top:1.5rem;
+  padding-bottom:2rem;
+  display:flex;
+  flex-direction:column;
+  gap:2.5rem;
+}
+
+.strategy-detail-header{
+  max-width:760px;
+}
+
+.strategy-detail-intro{
+  margin-top:0.5rem;
+  font-size:0.97rem;
+  line-height:1.7;
+  opacity:0.9;
+}
+
+.eyebrow{
+  text-transform:uppercase;
+  letter-spacing:0.18em;
+  font-size:0.78rem;
+  opacity:0.7;
+  margin-bottom:0.4rem;
+}
+
+.strategy-tabs{
+  margin-top:0.5rem;
+}
+
+.strategy-tabs-nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:1.5rem;
+  border-bottom:1px solid #1b1b1b;
+  margin-bottom:1.8rem;
+}
+
+.strategy-tab-btn{
+  background:none;
+  border:none;
+  padding:0.7rem 0;
+  font-size:0.82rem;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:#a3a3a3;
+  cursor:pointer;
+  position:relative;
+  white-space:nowrap;
+}
+
+.strategy-tab-btn::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-1px;
+  height:2px;
+  background:#ffffff;
+  transform:scaleX(0);
+  transform-origin:center;
+  transition:transform .18s ease-out;
+}
+
+.strategy-tab-btn.active{
+  color:#ffffff;
+}
+
+.strategy-tab-btn.active::after{
+  transform:scaleX(1);
+}
+
+.strategy-tabs-body{
+  margin-top:1.5rem;  /* simple vertical layout, no grid */
+}
+
+.strategy-overview{
+  font-size: 0.95rem;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.strategy-overview h4{
+  margin: 0 0 0.7rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.strategy-overview ul{
+  margin: 0.9rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.93rem;
+}
+
+.strategy-illustration{
+  text-align:center;
+}
+
+.strategy-illustration-circle{
+  width:170px;
+  height:170px;
+  border-radius:999px;
+  border:1px solid #262626;
+  margin:0 auto 1.1rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle at 30% 0%, #181818, #050505);
+}
+
+.strategy-illustration-icon{
+  font-size:1.9rem;
+  letter-spacing:0.32em;
+}
+
+.strategy-illustration-caption{
+  font-size:0.86rem;
+  line-height:1.6;
+  opacity:0.85;
+}
+
+.strategy-panels{
+  position:relative;
+}
+
+.strategy-panel{
+  display:none;
+  animation:fadeInStrategy .25s ease-out;
+}
+
+.strategy-panel.active{
+  display:block;
+}
+
+.strategy-panel h2{
+  font-size:1.35rem;
+  margin-bottom:0.9rem;
+}
+
+.strategy-panel p{
+  font-size:0.95rem;
+  margin-bottom:0.9rem;
+}
+
+.strategy-panel ul{
+  padding-left:1.1rem;
+  font-size:0.94rem;
+  line-height:1.7;
+}
+
+@keyframes fadeInStrategy{
+  from{opacity:0; transform:translateY(4px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+@media (max-width:900px){
+  .strategy-tabs-body{
+    grid-template-columns:1fr;
+  }
+  .strategy-illustration{
+    order:-1;
+    margin-bottom:0.5rem;
+  }
+  .strategy-illustration-circle{
+    width:150px;
+    height:150px;
+  }
+}
+/* ================================
+   STRUCTURE & STRATEGY — FULL CSS
+   ================================ */
+
+/* The whole list block – same left alignment as the H3 */
+.rs-vertical-list {
+  width: 100%;
+  max-width: 720px;          /* controls how wide the text goes */
+  margin: 1.8rem 0 0 0;      /* sits under the heading, left aligned */
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/* Each row (line + text) */
+.rs-v-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.4rem;
+}
+
+/* White vertical line */
+.rs-v-line {
+  width: 2px;                /* thin white line */
+  background: #ffffff;
+  opacity: 1;
+  height: 40px;              /* line height */
+  border-radius: 4px;
+  margin-top: 4px;           /* visually centers against title */
+}
+
+/* Title text */
+.rs-v-content h4 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Description text */
+.rs-v-content p {
+  margin-top: 0.35rem;
+  font-size: 0.98rem;
+  color: #cccccc;
+  line-height: 1.5;
+}
+
+/* Mobile tweaks – slightly tighter */
+@media (max-width: 700px) {
+  .rs-vertical-list {
+    max-width: 100%;
+    gap: 2rem;
+  }
+
+  .rs-v-item {
+    gap: 1rem;
+  }
+
+  .rs-v-line {
+    height: 36px;
+  }
+
+  .rs-v-content h4 {
+    font-size: 1.15rem;
+  }
+
+  .rs-v-content p {
+    font-size: 0.92rem;
+  }
+}
 
 
   </style>
@@ -2006,16 +2622,31 @@
     </script>
     <script>
     // Scroll-reveal intersection observer
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target); // animate once
-        }
-      });
-    }, { threshold: 0.2 });
-    reveals.forEach(el => observer.observe(el));
+// Scroll-reveal intersection observer for sections (.reveal)
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target); // animate once
+    }
+  });
+}, { threshold: 0.2 });
+reveals.forEach(el => observer.observe(el));
+
+// 🔁 Fallback scroll trigger for .autoShow and .imageReveal (cards/text)
+const animatedEls = document.querySelectorAll('.autoShow, .imageReveal');
+const animObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('rs-visible'); // used in @supports fallback
+      animObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+animatedEls.forEach(el => animObserver.observe(el));
+
   </script>
   <script>
     // Active nav link on scroll
@@ -2162,80 +2793,153 @@
 
 
   <script>
-    const hero = document.getElementById('home');
-    const model = document.getElementById('model');
-    const siteNav = document.querySelector('.navbar');
-    const siteFooter = document.querySelector('footer');
-    const siteSections = Array.from(document.querySelectorAll('.site-section')); // about, what-we-do, principles, contact
+  const hero       = document.getElementById('home');
+  const model      = document.getElementById('model');
+  const siteNav    = document.querySelector('.navbar');
+  const siteFooter = document.querySelector('footer');
 
-    const showHome = () => {
-    if (hero) hero.style.display = '';
-    if (model) model.style.display = 'none';
-    siteSections.forEach(s => s.style.display = '');
-    const statsBar = document.querySelector('.stats-bar');
-    if (statsBar) statsBar.style.display = '';            // SHOW stats bar on home
-    if (siteNav) siteNav.style.display = '';
-    if (siteFooter) siteFooter.style.display = '';
-    document.body.style.overflow = 'auto';
-    window.scrollTo(0,0);
-  };
+  const siteSections = Array.from(document.querySelectorAll('.site-section'));
+  const statsBar     = document.querySelector('.stats-bar');
+
+  const strategySection    = document.getElementById('strategy');
+  const blueprintSection   = document.getElementById('blueprint');
+  const structureSection   = document.getElementById('structure');
+  const testimonialSection = document.querySelector('.testimonial-section');
+  const contactSection     = document.getElementById('contact');
+  const strategiesStrip    = document.getElementById('strategies'); // PE/RE/QA/HA row
 
 
-    const showModel = () => {
-    if (hero) hero.style.display = 'none';
-    if (model) model.style.display = '';                 
-    siteSections.forEach(s => s.style.display = 'none'); 
-    const statsBar = document.querySelector('.stats-bar');
-    if (statsBar) statsBar.style.display = 'none';        // HIDE stats bar on model
-    if (siteNav) siteNav.style.display = 'none';          
-    if (siteFooter) siteFooter.style.display = '';   
-    document.body.style.overflow = 'auto';               
-    window.scrollTo(0,0);
-  };
+function showHome() {
+  if (hero)  hero.style.display  = '';
+  if (model) model.style.display = 'none';
+
+  // Show everything except the deep strategy detail section
+  siteSections.forEach(s => {
+    if (s === strategySection) {
+      s.style.display = 'none';
+    } else {
+      s.style.display = '';
+    }
+  });
+
+  // PE/RE/QA/HA strip IS visible on home
+  if (strategiesStrip) strategiesStrip.style.display = '';
+
+  if (statsBar)   statsBar.style.display   = '';
+  if (siteNav)    siteNav.style.display    = '';
+  if (siteFooter) siteFooter.style.display = '';
+
+  document.body.style.overflow = 'auto';
+
+  // 🔥 mark Home as active
+  if (typeof setActive === 'function') setActive('#home');
+
+  window.scrollTo(0, 0);
+}
+
+function showStrategyView() {
+  if (hero)  hero.style.display  = 'none';
+  if (model) model.style.display = 'none';
+
+  // Hide all main sections
+  siteSections.forEach(s => (s.style.display = 'none'));
+
+  // Hide the home strategy strip (PE/RE/QA/HA cards)
+  if (strategiesStrip) strategiesStrip.style.display = 'none';
+
+  // SHOW ONLY the main strategy section
+  if (strategySection) strategySection.style.display = '';
+
+  // Everything else (Blueprint, Structure, Quote, Contact) stays hidden
+  if (blueprintSection)   blueprintSection.style.display   = 'none';
+  if (structureSection)   structureSection.style.display   = 'none';
+  if (testimonialSection) testimonialSection.style.display = 'none';
+  if (contactSection)     contactSection.style.display     = 'none';
+
+  if (statsBar)   statsBar.style.display   = 'none';
+  if (siteNav)    siteNav.style.display    = '';
+  if (siteFooter) siteFooter.style.display = '';
+
+  document.body.style.overflow = 'auto';
+
+  // 🔥 mark Strategy as active
+  if (typeof setActive === 'function') setActive('#strategy');
+
+  // Always scroll to top of strategy section
+  if (strategySection) {
+    const y = strategySection.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo(0, y);
+  } else {
+    window.scrollTo(0, 0);
+  }
+}
+
+function showModel() {
+  if (hero)  hero.style.display  = 'none';
+  if (model) model.style.display = '';
+
+  // Hide all main sections and strips
+  siteSections.forEach(s => (s.style.display = 'none'));
+  if (strategiesStrip) strategiesStrip.style.display = 'none';
+
+  if (statsBar)   statsBar.style.display   = 'none';
+  if (siteNav)    siteNav.style.display    = 'none';
+  if (siteFooter) siteFooter.style.display = 'none';
+
+  document.body.style.overflow = 'hidden';
+  window.scrollTo(0, 0);
+
+  // 🔥 mark Acquisition Model as active (even if navbar is hidden)
+  if (typeof setActive === 'function') setActive('#model');
+}
 
 
-    const openFromHash = () => {
-    // If URL is #model -> always switch into model view
-    if (location.hash === '#model') {
+
+  function openFromHash() {
+    const h = location.hash;
+
+    // Modals handled elsewhere
+    if (h === '#privacy' || h === '#disclaimer') return;
+
+    // Model view
+    if (h === '#model') {
       showModel();
       return;
     }
 
-    // When we're in model view and user clicks a link to home/contact,
-    // return to the main site and scroll to that section.
-    if (
-      model &&
-      model.style.display !== 'none' &&
-      location.hash &&
-      location.hash !== '#privacy' &&
-      location.hash !== '#model'
-    ) {
-      // Go back to home layout first
-      showHome();
-
-      // Then scroll to the chosen section smoothly
-      const target = document.querySelector(location.hash);
-      if (target) {
-        setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
-      }
+    // Strategy view (ONLY the main strategy section)
+    if (h === '#strategy') {
+      showStrategyView();
       return;
     }
 
-    // Normal in-page navigation works as usual
-  };
+    // Default: home view
+    showHome();
 
+    // Normal in-page scroll (e.g. #about) in home layout
+    if (h && h !== '#home') {
+      const target = document.querySelector(h);
+      if (target) {
+        setTimeout(
+          () => target.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+          200
+        );
+      }
+    }
+  }
 
-    openFromHash();
-    window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
 
-
-
-    // Navbar link to open model
-    const navModel = document.getElementById('nav-model');
-    if (navModel) navModel.addEventListener('click', (e) => {
+  // Acquisition Model nav link -> force #model
+  const navModel = document.getElementById('nav-model');
+  if (navModel) {
+    navModel.addEventListener('click', (e) => {
       e.preventDefault();
       location.hash = '#model';
     });
+  }
+
 
     // ------- Model logic (same core math)
     const $ = id => document.getElementById(id);
@@ -2512,6 +3216,90 @@
 </script>
 <script>
 (function () {
+  const tabs   = document.querySelectorAll('.strategy-tab-btn');
+  const panels = document.querySelectorAll('.strategy-panel');
+  const icon   = document.querySelector('.strategy-illustration-icon'); // may not exist
+
+  if (!tabs.length || !panels.length) return;
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+
+      tabs.forEach(t => t.classList.toggle('active', t === btn));
+      panels.forEach(p => p.classList.toggle('active', p.dataset.tab === target));
+
+      // Only update icon if you add one in the future
+      if (icon && btn.dataset.short) {
+        icon.textContent = btn.dataset.short;
+      }
+    });
+  });
+})();
+</script>
+<script>
+(function () {
+  const toggle = document.querySelector('.contact-toggle');
+  const panel  = document.getElementById('contact-panel');
+  const navbar = document.querySelector('.navbar');
+
+  if (!toggle || !panel) return;
+
+  const NAV_OFFSET = (navbar ? navbar.offsetHeight : 0) + 16;
+
+  // start closed
+  panel.hidden = true;
+  panel.style.maxHeight = '0px';
+
+  toggle.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+    if (isOpen) {
+      // closing
+      const currentHeight = panel.scrollHeight;
+      panel.style.maxHeight = currentHeight + 'px'; // start height
+      void panel.offsetHeight;                      // force reflow
+      panel.style.maxHeight = '0px';
+      panel.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    } else {
+      // opening (no scroll here yet)
+      panel.hidden = false;
+      panel.classList.add('open');
+      const targetHeight = panel.scrollHeight;
+      panel.style.maxHeight = targetHeight + 'px';
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+  });
+
+  panel.addEventListener('transitionend', (e) => {
+    if (e.propertyName !== 'max-height') return;
+
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+    if (!isOpen) {
+      // fully closed → hide so it doesn't trap focus
+      panel.hidden = true;
+      return;
+    }
+
+    // fully opened → lock height and then scroll
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+
+    const rect = panel.getBoundingClientRect();
+    const y =
+      (window.pageYOffset || window.scrollY || 0) +
+      rect.top -
+      NAV_OFFSET;
+
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  });
+})();
+</script>
+
+
+<script>
+(function () {
   const track = document.getElementById('strategyTrack');
   const dotsWrap = document.getElementById('strategyDots');
   if (!track || !dotsWrap) return;
@@ -2541,8 +3329,8 @@
       track.scrollLeft = 0;
     }
 
-    dots.forEach((dot, idx) => {
-      dot.classList.toggle('active', idx === index);
+    dots.forEach((d, idx) => {
+      d.classList.toggle('active', idx === index);
     });
   }
 
@@ -2567,8 +3355,64 @@
 })();
 </script>
 
+<script>
+(function () {
+  const toggle = document.querySelector('.contact-toggle');
+  const panel  = document.getElementById('contact-panel');
+  const navbar = document.querySelector('.navbar');
 
+  if (!toggle || !panel) return;
 
+  const NAV_OFFSET = (navbar ? navbar.offsetHeight : 0) + 16;
 
+  // start closed
+  panel.hidden = true;
+  panel.style.maxHeight = '0px';
+
+  toggle.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+    if (isOpen) {
+      // closing
+      const currentHeight = panel.scrollHeight;
+      panel.style.maxHeight = currentHeight + 'px'; // start height
+      void panel.offsetHeight;                      // force reflow
+      panel.style.maxHeight = '0px';
+      panel.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    } else {
+      // opening (no scroll here yet)
+      panel.hidden = false;
+      panel.classList.add('open');
+      const targetHeight = panel.scrollHeight;
+      panel.style.maxHeight = targetHeight + 'px';
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+  });
+
+  panel.addEventListener('transitionend', (e) => {
+    if (e.propertyName !== 'max-height') return;
+
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+    if (!isOpen) {
+      // fully closed → hide so it doesn't trap focus
+      panel.hidden = true;
+      return;
+    }
+
+    // fully opened → lock height and then scroll
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+
+    const rect = panel.getBoundingClientRect();
+    const y =
+      (window.pageYOffset || window.scrollY || 0) +
+      rect.top -
+      NAV_OFFSET;
+
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  });
+})();
+</script>
   </body>
   </html>
